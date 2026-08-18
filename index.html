@@ -1,1 +1,1647 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ইসলামী সাহিত্য কেন্দ্র, পঞ্চগড়</title>
+<meta name="description" content="জ্ঞান • দাওয়াহ • সেবা">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root{
+  --green:#0A5C36;
+  --green-dark:#042D19;
+  --gold:#D4AF37;
+  --bg:#F4F6F8;
+  --white:#FFFFFF;
+  --text:#111827;
+  --muted:#6B7280;
+  --border:#E5E7EB;
+  --danger:#B42318;
+  --radius:14px;
+  --radius-sm:8px;
+  --shadow:0 1px 2px rgba(4,45,25,0.06),0 2px 10px rgba(4,45,25,0.05);
+  --header-h:60px;
+  --bottomnav-h:60px;
+  font-size:16px;
+}
+[data-theme="dark"]{
+  --green:#3FA873;
+  --green-dark:#08150F;
+  --gold:#E4C158;
+  --bg:#0B1310;
+  --white:#131C17;
+  --text:#EEF2EF;
+  --muted:#9AA69F;
+  --border:#233029;
+  --shadow:0 1px 2px rgba(0,0,0,0.3),0 2px 10px rgba(0,0,0,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'Hind Siliguri',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  transition:background .2s ease,color .2s ease;
+  padding-top:var(--header-h);
+}
+h1,h2,h3,.brand,.serif{font-family:'Noto Serif Bengali','Hind Siliguri',serif;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+input,textarea,select{font-family:inherit;}
+img{max-width:100%;display:block;}
+::selection{background:var(--gold);color:var(--green-dark);}
 
+.hairline{height:2px;background:linear-gradient(90deg,var(--green) 0%,var(--gold) 50%,var(--green) 100%);opacity:.85;}
+
+/* scrollbar tidy */
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
+
+/* ============================================================
+   2. HEADER
+   ============================================================ */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);
+  background:var(--green-dark);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px;z-index:500;
+}
+.header-left{display:flex;align-items:center;gap:10px;min-width:0;}
+.logo-mark{
+  width:38px;height:38px;border-radius:10px;flex:none;
+  background:radial-gradient(circle at 30% 30%,var(--gold),#9c7a1f 78%);
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+}
+.brand-block{min-width:0;}
+.brand-title{font-size:15px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brand-sub{font-size:11px;color:#CFEBDD;opacity:.85;}
+.header-right{display:flex;align-items:center;gap:4px;}
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;border:none;background:transparent;color:#fff;
+  display:flex;align-items:center;justify-content:center;position:relative;
+  font-size:19px;opacity:.92;
+}
+.icon-btn:active{background:rgba(255,255,255,.12);}
+.badge-dot{
+  position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);border:1.5px solid var(--green-dark);
+}
+.avatar{
+  width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--green-dark);
+  flex:none;
+}
+.avatar-lg{width:82px;height:82px;font-size:26px;border:3px solid var(--white);}
+
+/* ============================================================
+   3. LAYOUT SHELL
+   ============================================================ */
+.app-shell{
+  display:flex;max-width:1200px;margin:0 auto;min-height:calc(100vh - var(--header-h));
+}
+.sidebar{width:250px;flex:none;padding:16px 10px;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto;display:none;}
+.sidebar-right{width:280px;}
+.nav-item{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;
+  color:var(--text);font-size:15px;font-weight:500;margin-bottom:2px;
+}
+.nav-item .ic{width:22px;text-align:center;font-size:18px;}
+.nav-item.active{background:var(--green);color:#fff;}
+.nav-item:not(.active):hover{background:var(--white);}
+main.feed-col{flex:1;min-width:0;padding:14px 10px 90px;}
+.page{max-width:640px;margin:0 auto;}
+.page-wide{max-width:1000px;margin:0 auto;}
+
+@media(min-width:900px){
+  body{padding-top:var(--header-h);}
+  .sidebar{display:block;}
+  main.feed-col{padding:18px 18px 40px;border-left:1px solid var(--border);border-right:1px solid var(--border);}
+  .bottom-nav{display:none !important;}
+}
+
+/* ============================================================
+   4. BOTTOM NAV (mobile)
+   ============================================================ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottomnav-h);
+  background:var(--white);border-top:1px solid var(--border);
+  display:flex;z-index:500;
+}
+.bn-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;color:var(--muted);font-size:10.5px;border:none;background:none;
+}
+.bn-item .ic{font-size:20px;}
+.bn-item.active{color:var(--green);}
+.bn-item.post-btn .ic{
+  width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+}
+
+/* ============================================================
+   5. CARDS / COMMON
+   ============================================================ */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);}
+.section-title{font-size:15px;font-weight:600;margin-bottom:10px;color:var(--green-dark);}
+[data-theme="dark"] .section-title{color:var(--gold);}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 16px;border-radius:10px;border:1px solid var(--border);
+  background:var(--white);color:var(--text);font-size:14px;font-weight:600;
+}
+.btn-primary{background:var(--green);border-color:var(--green);color:#fff;}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:var(--green-dark);}
+.btn-block{width:100%;}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--muted);}
+.btn-sm{padding:6px 12px;font-size:12.5px;border-radius:8px;}
+.btn:active{transform:scale(.98);}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:600;}
+.field input,.field textarea,.field select{
+  width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;
+  background:var(--bg);color:var(--text);font-size:14.5px;
+}
+[data-theme="dark"] .field input,[data-theme="dark"] .field textarea,[data-theme="dark"] .field select{background:var(--green-dark);}
+.field textarea{resize:vertical;min-height:80px;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--green);outline-offset:1px;}
+.muted{color:var(--muted);}
+.gold-text{color:var(--gold);}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;background:var(--bg);color:var(--muted);font-size:11.5px;font-weight:600;border:1px solid var(--border);}
+.chip-green{background:rgba(10,92,54,.1);color:var(--green);border-color:transparent;}
+
+/* Empty state */
+.empty-state{padding:40px 20px;text-align:center;color:var(--muted);}
+.empty-icon{font-size:34px;margin-bottom:8px;opacity:.55;}
+.empty-title{font-weight:600;color:var(--text);margin-bottom:4px;font-size:15px;}
+.empty-desc{font-size:13.5px;}
+
+/* skeleton */
+.skel{background:linear-gradient(100deg,var(--border) 30%,#f2ead0 50%,var(--border) 70%);background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:150% 0;}100%{background-position:-50% 0;}}
+.skel-post{padding:14px;margin-bottom:12px;}
+.skel-row{display:flex;gap:10px;margin-bottom:12px;}
+.skel-avatar{width:42px;height:42px;border-radius:50%;flex:none;}
+.skel-line{height:11px;border-radius:6px;margin-bottom:7px;}
+
+/* toast */
+#toast-wrap{position:fixed;top:calc(var(--header-h) + 10px);left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2000;pointer-events:none;}
+.toast{background:var(--green-dark);color:#fff;padding:10px 18px;border-radius:10px;font-size:13.5px;box-shadow:var(--shadow);max-width:90%;}
+.toast.err{background:var(--danger);}
+
+/* modal / sheet */
+.overlay{position:fixed;inset:0;background:rgba(4,45,25,.55);z-index:900;display:none;align-items:flex-end;justify-content:center;}
+.overlay.show{display:flex;}
+@media(min-width:640px){.overlay{align-items:center;}}
+.sheet{
+  background:var(--white);width:100%;max-width:560px;max-height:88vh;overflow-y:auto;
+  border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+}
+@media(min-width:640px){.sheet{border-radius:18px;}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sheet-title{font-size:16px;font-weight:600;}
+
+/* ============================================================
+   6. FEED / POST CARD
+   ============================================================ */
+.post-card{margin-bottom:12px;padding:14px;}
+.post-top{display:flex;gap:10px;align-items:flex-start;}
+.post-meta{flex:1;min-width:0;}
+.post-name{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:6px;}
+.post-sub{font-size:12px;color:var(--muted);margin-top:1px;}
+.post-type-tag{margin-top:6px;}
+.post-text{font-size:14.5px;line-height:1.75;margin:10px 0;white-space:pre-wrap;word-break:break-word;}
+.post-media{border-radius:10px;overflow:hidden;margin:8px 0;border:1px solid var(--border);}
+.post-media img,.post-media video{width:100%;max-height:480px;object-fit:cover;}
+.post-actions{display:flex;border-top:1px solid var(--border);margin-top:10px;padding-top:8px;}
+.post-actions button{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;padding:7px;border-radius:8px;
+}
+.post-actions button.liked{color:var(--green);}
+.post-actions button:active{background:var(--bg);}
+.comment-box{margin-top:10px;border-top:1px dashed var(--border);padding-top:10px;}
+.comment-row{display:flex;gap:8px;margin-bottom:8px;}
+.comment-bubble{background:var(--bg);border-radius:12px;padding:8px 12px;flex:1;}
+.comment-name{font-size:12.5px;font-weight:700;}
+.comment-text{font-size:13px;margin-top:2px;}
+.comment-input-row{display:flex;gap:8px;margin-top:8px;}
+.comment-input-row input{flex:1;}
+
+/* member/book/activity list cards */
+.list-card{display:flex;gap:12px;padding:12px;margin-bottom:10px;align-items:center;}
+.list-card .thumb{width:56px;height:56px;border-radius:10px;object-fit:cover;background:var(--bg);flex:none;}
+.list-card .info{flex:1;min-width:0;}
+.list-card .title{font-weight:600;font-size:14.5px;}
+.list-card .sub{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+/* grid for right sidebar / stats */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-box{background:var(--bg);border-radius:10px;padding:12px;text-align:center;}
+.stat-num{font-size:19px;font-weight:700;color:var(--green);}
+[data-theme="dark"] .stat-num{color:var(--gold);}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* messages */
+.convo-item{display:flex;gap:10px;padding:12px;align-items:center;border-bottom:1px solid var(--border);}
+.msg-wrap{display:flex;flex-direction:column;height:calc(100vh - var(--header-h) - 130px);}
+.msg-scroll{flex:1;overflow-y:auto;padding:10px 4px;}
+.msg-bubble{max-width:75%;padding:9px 13px;border-radius:14px;font-size:14px;margin-bottom:8px;line-height:1.5;}
+.msg-in{background:var(--bg);align-self:flex-start;border-bottom-left-radius:4px;}
+.msg-out{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;margin-left:auto;}
+.msg-row{display:flex;}
+.msg-input-bar{display:flex;gap:8px;padding:10px 4px;border-top:1px solid var(--border);}
+.msg-input-bar input{flex:1;}
+
+/* login */
+.auth-wrap{max-width:400px;margin:26px auto;padding:0 14px;}
+.auth-hero{text-align:center;margin-bottom:22px;}
+.auth-hero .logo-mark{width:60px;height:60px;font-size:28px;margin:0 auto 10px;}
+.tab-switch{display:flex;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:18px;}
+.tab-switch button{flex:1;padding:9px;border:none;background:none;border-radius:9px;font-weight:600;font-size:13.5px;color:var(--muted);}
+.tab-switch button.active{background:var(--white);color:var(--green);box-shadow:var(--shadow);}
+
+/* search */
+.search-bar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:9px 13px;margin-bottom:14px;}
+.search-bar input{flex:1;border:none;background:none;font-size:14.5px;color:var(--text);}
+.search-bar input:focus{outline:none;}
+
+/* tabs */
+.tabbar{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto;}
+.tabbar button{padding:10px 14px;background:none;border:none;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;}
+.tabbar button.active{color:var(--green);border-color:var(--green);}
+
+/* filter row */
+.filter-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;}
+.filter-row select{flex:none;width:auto;padding:8px 10px;font-size:12.5px;border-radius:8px;}
+
+/* more menu grid */
+.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.more-cell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;background:var(--bg);font-size:11.5px;font-weight:600;text-align:center;}
+.more-cell .ic{font-size:21px;}
+
+/* fab-less create modal type grid */
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.type-opt{border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;font-size:12px;font-weight:600;background:var(--bg);}
+.type-opt.active{border-color:var(--green);background:rgba(10,92,54,.08);color:var(--green);}
+
+.notif-item{display:flex;gap:10px;padding:12px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.notif-item.unread{background:rgba(212,175,55,.08);}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;margin-top:6px;}
+
+.page-hero{padding:20px 4px 6px;}
+.page-hero h1{font-size:19px;}
+
+.progress-bar{height:6px;background:var(--bg);border-radius:6px;overflow:hidden;margin-top:6px;}
+.progress-bar span{display:block;height:100%;background:var(--green);}
+
+hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
+
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.dot-online{width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid var(--white);position:absolute;bottom:0;right:0;}
+.av-wrap{position:relative;flex:none;}
+
+.hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="app-header">
+  <div class="header-left">
+    <div class="logo-mark">🕌</div>
+    <div class="brand-block">
+      <div class="brand-title">ইসলামী সাহিত্য কেন্দ্র</div>
+      <div class="brand-sub">পঞ্চগড়</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="icon-btn" aria-label="সার্চ" onclick="go('search')">🔍</button>
+    <button class="icon-btn" aria-label="নোটিফিকেশন" onclick="go('notifications')" id="notifBtn">🔔<span class="badge-dot hidden" id="notifDot"></span></button>
+    <button class="icon-btn" aria-label="মেনু" onclick="openMoreMenu()">☰</button>
+    <button class="icon-btn" aria-label="প্রোফাইল" onclick="go('profile')" style="padding:0;">
+      <span class="avatar" id="headerAvatar">?</span>
+    </button>
+  </div>
+</header>
+<div class="hairline"></div>
+
+<div id="toast-wrap"></div>
+
+<!-- ============================================================
+     APP SHELL
+     ============================================================ -->
+<div class="app-shell">
+
+  <!-- LEFT SIDEBAR (desktop) -->
+  <aside class="sidebar" id="leftSidebar">
+    <a class="nav-item" data-page="home" onclick="go('home')"><span class="ic">🏠</span> হোম</a>
+    <a class="nav-item" data-page="search" onclick="go('search')"><span class="ic">🔍</span> সার্চ</a>
+    <a class="nav-item" data-page="members" onclick="go('members')"><span class="ic">👥</span> সদস্যবৃন্দ</a>
+    <a class="nav-item" data-page="books" onclick="go('books')"><span class="ic">📚</span> বইসমূহ</a>
+    <a class="nav-item" data-page="activities" onclick="go('activities')"><span class="ic">📰</span> কার্যক্রম</a>
+    <a class="nav-item" data-page="events" onclick="go('events')"><span class="ic">📅</span> ইভেন্ট</a>
+    <a class="nav-item" data-page="messages" onclick="go('messages')"><span class="ic">💬</span> মেসেজ</a>
+    <a class="nav-item" data-page="groups" onclick="go('groups')"><span class="ic">👨‍👩‍👦</span> গ্রুপ</a>
+    <a class="nav-item" data-page="donation" onclick="go('donation')"><span class="ic">💖</span> দান করুন</a>
+    <a class="nav-item" data-page="notices" onclick="go('notices')"><span class="ic">📢</span> নোটিশ</a>
+    <a class="nav-item" data-page="profile" onclick="go('profile')"><span class="ic">👤</span> প্রোফাইল</a>
+    <hr class="div">
+    <a class="nav-item" data-page="dashboard" onclick="go('dashboard')"><span class="ic">📊</span> ড্যাশবোর্ড</a>
+    <a class="nav-item" data-page="settings" onclick="go('settings')"><span class="ic">⚙️</span> সেটিংস</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="feed-col" id="mainContent"></main>
+
+  <!-- RIGHT SIDEBAR (desktop) -->
+  <aside class="sidebar sidebar-right" id="rightSidebar">
+    <div class="card" style="padding:14px;margin-bottom:14px;">
+      <div class="section-title">সংগঠন সম্পর্কে</div>
+      <div id="orgInfoBox" class="muted" style="font-size:13px;line-height:1.7;">
+        <div class="skel skel-line" style="width:100%;"></div>
+        <div class="skel skel-line" style="width:80%;"></div>
+      </div>
+    </div>
+    <div class="card" style="padding:14px;margin-bottom:14px;">
+      <div class="section-title">সংক্ষিপ্ত পরিসংখ্যান</div>
+      <div class="stat-grid" id="statsBox">
+        <div class="stat-box"><div class="skel skel-line" style="width:40%;margin:0 auto 6px;"></div></div>
+        <div class="stat-box"><div class="skel skel-line" style="width:40%;margin:0 auto 6px;"></div></div>
+        <div class="stat-box"><div class="skel skel-line" style="width:40%;margin:0 auto 6px;"></div></div>
+        <div class="stat-box"><div class="skel skel-line" style="width:40%;margin:0 auto 6px;"></div></div>
+      </div>
+    </div>
+    <div class="card" style="padding:14px;">
+      <div class="section-title">গুরুত্বপূর্ণ নোটিশ</div>
+      <div id="noticesPreview"><div class="empty-desc">লোড হচ্ছে…</div></div>
+    </div>
+  </aside>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item" data-page="home" onclick="go('home')"><span class="ic">🏠</span>হোম</button>
+  <button class="bn-item" data-page="search" onclick="go('search')"><span class="ic">🔍</span>সার্চ</button>
+  <button class="bn-item post-btn" data-page="create" onclick="openCreatePost()"><span class="ic">➕</span>পোস্ট</button>
+  <button class="bn-item" data-page="messages" onclick="go('messages')"><span class="ic">💬</span>মেসেজ</button>
+  <button class="bn-item" data-page="profile" onclick="go('profile')"><span class="ic">👤</span>প্রোফাইল</button>
+</nav>
+
+<!-- MORE MENU SHEET -->
+<div class="overlay" id="moreOverlay" onclick="closeOverlayBg(event,'moreOverlay')">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">আরও</span><button class="icon-btn" style="color:var(--text)" onclick="closeOverlay('moreOverlay')">✕</button></div>
+    <div class="more-grid">
+      <a class="more-cell" onclick="go('members');closeOverlay('moreOverlay')"><span class="ic">👥</span>সদস্যবৃন্দ</a>
+      <a class="more-cell" onclick="go('books');closeOverlay('moreOverlay')"><span class="ic">📚</span>বইসমূহ</a>
+      <a class="more-cell" onclick="go('branches');closeOverlay('moreOverlay')"><span class="ic">🏢</span>শাখাসমূহ</a>
+      <a class="more-cell" onclick="go('activities');closeOverlay('moreOverlay')"><span class="ic">📰</span>কার্যক্রম</a>
+      <a class="more-cell" onclick="go('events');closeOverlay('moreOverlay')"><span class="ic">📅</span>ইভেন্ট</a>
+      <a class="more-cell" onclick="go('notices');closeOverlay('moreOverlay')"><span class="ic">📢</span>নোটিশ</a>
+      <a class="more-cell" onclick="go('donation');closeOverlay('moreOverlay')"><span class="ic">💖</span>দান করুন</a>
+      <a class="more-cell" onclick="go('join');closeOverlay('moreOverlay')"><span class="ic">🤝</span>সদস্য হন</a>
+      <a class="more-cell" onclick="go('about');closeOverlay('moreOverlay')"><span class="ic">ℹ️</span>আমাদের সম্পর্কে</a>
+      <a class="more-cell" onclick="go('contact');closeOverlay('moreOverlay')"><span class="ic">📞</span>যোগাযোগ</a>
+      <a class="more-cell" onclick="go('settings');closeOverlay('moreOverlay')"><span class="ic">⚙️</span>সেটিংস</a>
+      <a class="more-cell" onclick="go('dashboard');closeOverlay('moreOverlay')"><span class="ic">📊</span>ড্যাশবোর্ড</a>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE POST SHEET -->
+<div class="overlay" id="createPostOverlay" onclick="closeOverlayBg(event,'createPostOverlay')">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">নতুন পোস্ট তৈরি করুন</span><button class="icon-btn" style="color:var(--text)" onclick="closeOverlay('createPostOverlay')">✕</button></div>
+    <div class="field">
+      <label>পোস্টের ধরন</label>
+      <div class="type-grid" id="postTypeGrid"></div>
+    </div>
+    <div class="field">
+      <label>লিখুন</label>
+      <textarea id="postText" placeholder="আপনার মনের কথা লিখুন…"></textarea>
+    </div>
+    <div class="field" id="hadithRefWrap">
+      <label>হাদিস রেফারেন্স (ঐচ্ছিক)</label>
+      <input type="text" id="postHadithRef" placeholder="যেমনঃ সহীহ বুখারী, হাদিস নং ১">
+    </div>
+    <div class="field">
+      <label>ছবি</label>
+      <input type="file" id="postImage" accept="image/*">
+    </div>
+    <div class="field">
+      <label>ভিডিও</label>
+      <input type="file" id="postVideo" accept="video/*">
+    </div>
+    <div class="field">
+      <label>লোকেশন (ঐচ্ছিক)</label>
+      <input type="text" id="postLocation" placeholder="যেমনঃ পঞ্চগড় সদর">
+    </div>
+    <button class="btn btn-primary btn-block" id="publishBtn" onclick="publishPost()">প্রকাশ করুন</button>
+  </div>
+</div>
+
+<!-- GENERIC MODAL (comment on visitor, image viewer etc.) -->
+<div class="overlay" id="genericOverlay" onclick="closeOverlayBg(event,'genericOverlay')">
+  <div class="sheet" id="genericSheet"></div>
+</div>
+
+<script type="module">
+/* ============================================================
+   1. FIREBASE IMPORTS
+   ============================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signOut, sendPasswordResetEmail, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getDatabase, ref, get, set, push, update, remove, onValue, off,
+  query, orderByChild, equalTo, limitToLast, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {
+  getStorage, ref as sRef, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+/* ============================================================
+   2. FIREBASE CONFIGURATION
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyB1XvPzg-4cHe729NOL_2MXX6hnYv94mUY",
+  authDomain: "islamic-dawati-center.firebaseapp.com",
+  databaseURL: "https://islamic-dawati-center-default-rtdb.firebaseio.com",
+  projectId: "islamic-dawati-center",
+  storageBucket: "islamic-dawati-center.firebasestorage.app",
+  messagingSenderId: "141362944322",
+  appId: "1:141362944322:web:9794c4d1d869705a0fd0db"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+/* ============================================================
+   3. GLOBAL STATE
+   ============================================================ */
+let currentUser = null;      // Firebase auth user
+let currentProfile = null;   // /users/{uid} data
+let activeListeners = [];    // refs currently listened, cleared on page change
+let currentPage = 'home';
+let selectedPostType = 'article';
+let activeChatUid = null;
+
+window.go = go;
+window.openMoreMenu = () => document.getElementById('moreOverlay').classList.add('show');
+window.closeOverlay = (id) => document.getElementById(id).classList.remove('show');
+window.closeOverlayBg = (e,id) => { if(e.target.id===id) closeOverlay(id); };
+
+/* ============================================================
+   4. UTILITIES / UI COMPONENTS
+   ============================================================ */
+function toast(msg, isErr=false){
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = 'toast' + (isErr?' err':'');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
+}
+function esc(str){
+  if(str===undefined||str===null) return '';
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function initials(name){
+  if(!name) return '?';
+  const parts = name.trim().split(' ').filter(Boolean);
+  return (parts[0]?.[0]||'') + (parts[1]?.[0]||'');
+}
+function timeAgo(ts){
+  if(!ts) return '';
+  const diff = Math.floor((Date.now()-ts)/1000);
+  if(diff<60) return 'এইমাত্র';
+  if(diff<3600) return Math.floor(diff/60)+' মিনিট আগে';
+  if(diff<86400) return Math.floor(diff/3600)+' ঘণ্টা আগে';
+  if(diff<2592000) return Math.floor(diff/86400)+' দিন আগে';
+  return new Date(ts).toLocaleDateString('bn-BD');
+}
+function skeletonList(n=3){
+  let h='';
+  for(let i=0;i<n;i++){
+    h += `<div class="card skel-row" style="padding:14px;">
+      <div class="skel skel-avatar"></div>
+      <div style="flex:1;">
+        <div class="skel skel-line" style="width:40%;"></div>
+        <div class="skel skel-line" style="width:80%;"></div>
+        <div class="skel skel-line" style="width:60%;"></div>
+      </div>
+    </div>`;
+  }
+  return h;
+}
+function emptyState(icon,title,desc){
+  return `<div class="empty-state card">
+    <div class="empty-icon">${icon}</div>
+    <div class="empty-title">${esc(title)}</div>
+    <div class="empty-desc">${esc(desc)}</div>
+  </div>`;
+}
+function errorState(){
+  return `<div class="empty-state card">
+    <div class="empty-icon">⚠️</div>
+    <div class="empty-title">সংযোগ সমস্যা</div>
+    <div class="empty-desc">সার্ভারের সাথে সংযোগ স্থাপন করা যাচ্ছে না। কিছুক্ষণ পর আবার চেষ্টা করুন।</div>
+  </div>`;
+}
+function clearListeners(){
+  activeListeners.forEach(({r,cb})=>off(r,'value',cb));
+  activeListeners = [];
+}
+function listenValue(path, cb){
+  const r = ref(db, path);
+  const handler = onValue(r, cb, ()=> {});
+  activeListeners.push({r, cb:handler});
+  return r;
+}
+function requireAuth(actionLabel){
+  if(!currentUser){
+    toast('এই কাজটির জন্য লগইন করুন', true);
+    go('login');
+    return false;
+  }
+  return true;
+}
+
+/* ============================================================
+   5. ROUTER / PAGE NAVIGATION
+   ============================================================ */
+const PUBLIC_ORG_INFO = {loaded:false};
+
+function go(page){
+  currentPage = page;
+  clearListeners();
+  document.querySelectorAll('.nav-item, .bn-item').forEach(el=>{
+    el.classList.toggle('active', el.dataset.page===page);
+  });
+  window.scrollTo(0,0);
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+  const renderers = {
+    home: renderHome, search: renderSearch, messages: renderMessages, chat: renderChatPage,
+    profile: renderProfile, members: renderMembers, books: renderBooks, activities: renderActivities,
+    events: renderEvents, notices: renderNotices, donation: renderDonation, join: renderJoin,
+    about: renderAbout, contact: renderContact, settings: renderSettings, login: renderLogin,
+    dashboard: renderDashboard, notifications: renderNotifications, branches: renderBranches,
+    groups: renderGroups, group: renderGroupPage
+  };
+  (renderers[page] || renderHome)(main);
+}
+
+/* ============================================================
+   6. AUTH
+   ============================================================ */
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  if(user){
+    const snap = await get(ref(db, 'users/'+user.uid));
+    currentProfile = snap.exists() ? snap.val() : null;
+    const av = document.getElementById('headerAvatar');
+    if(currentProfile?.photoURL){
+      av.innerHTML = `<img src="${esc(currentProfile.photoURL)}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    } else {
+      av.textContent = initials(currentProfile?.name || user.email);
+    }
+    listenNotifCount();
+  } else {
+    currentProfile = null;
+    document.getElementById('headerAvatar').textContent = '?';
+  }
+  if(currentPage) go(currentPage === 'login' && user ? 'home' : currentPage);
+});
+
+function listenNotifCount(){
+  if(!currentUser) return;
+  const r = ref(db, 'notifications/'+currentUser.uid);
+  onValue(r, snap=>{
+    let unread = false;
+    snap.forEach(c=>{ if(c.val() && c.val().read===false) unread = true; });
+    document.getElementById('notifDot').classList.toggle('hidden', !unread);
+  });
+}
+
+function renderLogin(main){
+  main.innerHTML = `
+  <div class="auth-wrap">
+    <div class="auth-hero">
+      <div class="logo-mark">🕌</div>
+      <h1 class="serif" style="font-size:19px;">ইসলামী সাহিত্য কেন্দ্র</h1>
+      <div class="muted" style="font-size:13px;margin-top:2px;">জ্ঞান • দাওয়াহ • সেবা</div>
+    </div>
+    <div class="tab-switch">
+      <button id="tabLoginBtn" class="active" onclick="switchAuthTab('login')">লগইন</button>
+      <button id="tabResetBtn" onclick="switchAuthTab('reset')">পাসওয়ার্ড ভুলে গেছেন</button>
+    </div>
+    <div id="loginForm">
+      <div class="field"><label>ইমেইল</label><input type="email" id="loginEmail" placeholder="you@example.com"></div>
+      <div class="field"><label>পাসওয়ার্ড</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+      <button class="btn btn-primary btn-block" onclick="doLogin()" id="loginBtn">লগইন করুন</button>
+      <p class="muted" style="text-align:center;font-size:13px;margin-top:14px;">সদস্য হতে চান? <a class="gold-text" style="font-weight:600;" onclick="go('join')">আবেদন করুন</a></p>
+    </div>
+    <div id="resetForm" class="hidden">
+      <div class="field"><label>ইমেইল</label><input type="email" id="resetEmail" placeholder="you@example.com"></div>
+      <button class="btn btn-primary btn-block" onclick="doReset()">রিসেট লিংক পাঠান</button>
+    </div>
+  </div>`;
+}
+window.switchAuthTab = (tab)=>{
+  document.getElementById('tabLoginBtn').classList.toggle('active', tab==='login');
+  document.getElementById('tabResetBtn').classList.toggle('active', tab==='reset');
+  document.getElementById('loginForm').classList.toggle('hidden', tab!=='login');
+  document.getElementById('resetForm').classList.toggle('hidden', tab!=='reset');
+};
+window.doLogin = async ()=>{
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if(!email || !password){ toast('ইমেইল ও পাসওয়ার্ড দিন', true); return; }
+  try{
+    await signInWithEmailAndPassword(auth, email, password);
+    toast('স্বাগতম!');
+    go('home');
+  }catch(e){ toast('লগইন ব্যর্থ হয়েছে। তথ্য যাচাই করুন।', true); }
+};
+window.doReset = async ()=>{
+  const email = document.getElementById('resetEmail').value.trim();
+  if(!email){ toast('ইমেইল দিন', true); return; }
+  try{
+    await sendPasswordResetEmail(auth, email);
+    toast('রিসেট লিংক ইমেইলে পাঠানো হয়েছে');
+  }catch(e){ toast('ব্যর্থ হয়েছে, ইমেইলটি যাচাই করুন', true); }
+};
+window.doLogout = async ()=>{
+  await signOut(auth);
+  toast('লগআউট সম্পন্ন হয়েছে');
+  go('home');
+};
+
+/* ============================================================
+   7. HOME FEED
+   ============================================================ */
+function renderHome(main){
+  main.innerHTML = `
+    <div id="feedList">${skeletonList(3)}</div>
+  `;
+  loadOrgSidebar();
+  const r = query(ref(db,'posts'), limitToLast(60));
+  const handler = onValue(r, snap=>{
+    const list = document.getElementById('feedList');
+    if(!list) return;
+    if(!snap.exists()){
+      list.innerHTML = emptyState('📝','এখনও কোনো পোস্ট প্রকাশ করা হয়নি।','প্রথম পোস্টটি আপনিই করুন।');
+      return;
+    }
+    const items = [];
+    snap.forEach(c=> items.push({id:c.key, ...c.val()}));
+    items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    list.innerHTML = items.map(postCardHtml).join('');
+  }, ()=>{
+    const list = document.getElementById('feedList');
+    if(list) list.innerHTML = errorState();
+  });
+  activeListeners.push({r, cb:handler});
+}
+
+const POST_TYPE_LABELS = {
+  hadith:'হাদিস', article:'ইসলামী প্রবন্ধ', image:'ছবি', video:'ভিডিও', activity:'কার্যক্রম', book:'বই সম্পর্কিত'
+};
+
+function postCardHtml(p){
+  const likeCount = p.likes ? Object.keys(p.likes).length : 0;
+  const commentCount = p.comments ? Object.keys(p.comments).length : 0;
+  const liked = currentUser && p.likes && p.likes[currentUser.uid];
+  return `
+  <div class="card post-card" data-post="${p.id}">
+    <div class="post-top">
+      <div class="av-wrap">
+        ${p.authorPhoto ? `<img class="avatar" src="${esc(p.authorPhoto)}">` : `<span class="avatar">${initials(p.authorName)}</span>`}
+      </div>
+      <div class="post-meta">
+        <div class="post-name">${esc(p.authorName||'সদস্য')} ${p.authorRole?`<span class="chip chip-green">${esc(p.authorRole)}</span>`:''}</div>
+        <div class="post-sub">${esc(p.authorBranch||'')}${p.authorBranch?' • ':''}${timeAgo(p.createdAt)}</div>
+      </div>
+    </div>
+    ${p.type?`<div class="post-type-tag"><span class="chip">${esc(POST_TYPE_LABELS[p.type]||p.type)}</span></div>`:''}
+    ${p.text?`<div class="post-text">${esc(p.text)}</div>`:''}
+    ${p.hadithRef?`<div class="muted" style="font-size:12.5px;margin:-4px 0 8px;">📖 ${esc(p.hadithRef)}</div>`:''}
+    ${p.imageURL?`<div class="post-media"><img src="${esc(p.imageURL)}" loading="lazy"></div>`:''}
+    ${p.videoURL?`<div class="post-media"><video src="${esc(p.videoURL)}" controls></video></div>`:''}
+    ${p.location?`<div class="muted" style="font-size:12px;">📍 ${esc(p.location)}</div>`:''}
+    <div class="post-actions">
+      <button class="${liked?'liked':''}" onclick="toggleLike('${p.id}')">👍 লাইক ${likeCount>0?`(${likeCount})`:''}</button>
+      <button onclick="toggleComments('${p.id}')">💬 মন্তব্য ${commentCount>0?`(${commentCount})`:''}</button>
+      <button onclick="sharePost('${p.id}')">↗️ শেয়ার</button>
+    </div>
+    <div class="comment-box hidden" id="cbox-${p.id}">
+      <div id="clist-${p.id}" class="muted" style="font-size:13px;">লোড হচ্ছে…</div>
+      <div class="comment-input-row">
+        <input type="text" id="cinput-${p.id}" placeholder="মন্তব্য লিখুন…">
+        <button class="btn btn-primary btn-sm" onclick="submitComment('${p.id}')">পাঠান</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+window.toggleLike = async (postId)=>{
+  if(!requireAuth()) return;
+  const likeRef = ref(db, `posts/${postId}/likes/${currentUser.uid}`);
+  const snap = await get(likeRef);
+  if(snap.exists()) await remove(likeRef);
+  else await set(likeRef, true);
+};
+
+window.toggleComments = (postId)=>{
+  const box = document.getElementById('cbox-'+postId);
+  box.classList.toggle('hidden');
+  if(!box.classList.contains('hidden')){
+    const r = ref(db, `posts/${postId}/comments`);
+    onValue(r, snap=>{
+      const target = document.getElementById('clist-'+postId);
+      if(!target) return;
+      if(!snap.exists()){ target.innerHTML = '<div class="muted" style="padding:6px 0;">কোনো মন্তব্য নেই।</div>'; return; }
+      const items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+      items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+      target.innerHTML = items.map(c=>`
+        <div class="comment-row">
+          <span class="avatar" style="width:30px;height:30px;font-size:11px;">${initials(c.name)}</span>
+          <div class="comment-bubble">
+            <div class="comment-name">${esc(c.name)}</div>
+            <div class="comment-text">${esc(c.text)}</div>
+          </div>
+        </div>`).join('');
+    });
+  }
+};
+
+window.submitComment = async (postId)=>{
+  const input = document.getElementById('cinput-'+postId);
+  const text = input.value.trim();
+  if(!text) return;
+  if(currentUser && currentProfile){
+    await push(ref(db, `posts/${postId}/comments`), {
+      uid: currentUser.uid, name: currentProfile.name || currentUser.email, text, createdAt: Date.now()
+    });
+    input.value = '';
+  } else if(currentUser){
+    await push(ref(db, `posts/${postId}/comments`), {
+      uid: currentUser.uid, name: currentUser.email, text, createdAt: Date.now()
+    });
+    input.value = '';
+  } else {
+    openVisitorCommentModal(postId, text);
+  }
+};
+
+function openVisitorCommentModal(postId, prefill){
+  const sheet = document.getElementById('genericSheet');
+  sheet.innerHTML = `
+    <div class="sheet-head"><span class="sheet-title">মন্তব্য করতে তথ্য দিন</span><button class="icon-btn" style="color:var(--text)" onclick="closeOverlay('genericOverlay')">✕</button></div>
+    <div class="field"><label>নাম</label><input id="vName" type="text"></div>
+    <div class="field"><label>মোবাইল নম্বর</label><input id="vMobile" type="text"></div>
+    <div class="field"><label>ঠিকানা</label><input id="vAddress" type="text"></div>
+    <div class="field"><label>মন্তব্য</label><textarea id="vComment">${esc(prefill||'')}</textarea></div>
+    <button class="btn btn-primary btn-block" onclick="submitVisitorComment('${postId}')">পাঠান</button>
+  `;
+  document.getElementById('genericOverlay').classList.add('show');
+}
+window.submitVisitorComment = async (postId)=>{
+  const name = document.getElementById('vName').value.trim();
+  const mobile = document.getElementById('vMobile').value.trim();
+  const address = document.getElementById('vAddress').value.trim();
+  const text = document.getElementById('vComment').value.trim();
+  if(!name || !mobile || !text){ toast('নাম, মোবাইল ও মন্তব্য আবশ্যক', true); return; }
+  await push(ref(db, `posts/${postId}/comments`), { name, mobile, address, text, createdAt: Date.now(), visitor:true });
+  closeOverlay('genericOverlay');
+  toast('মন্তব্য প্রকাশিত হয়েছে');
+};
+
+window.sharePost = (postId)=>{
+  const url = location.href.split('#')[0] + '#post-' + postId;
+  if(navigator.share){ navigator.share({title:'ইসলামী সাহিত্য কেন্দ্র', url}); }
+  else { navigator.clipboard.writeText(url); toast('লিংক কপি হয়েছে'); }
+};
+
+/* ---- Create Post ---- */
+const POST_TYPES = [
+  {id:'hadith', label:'হাদিস'}, {id:'article', label:'প্রবন্ধ'}, {id:'image', label:'ছবি'},
+  {id:'video', label:'ভিডিও'}, {id:'activity', label:'কার্যক্রম'}, {id:'book', label:'বই'}
+];
+window.openCreatePost = ()=>{
+  if(!requireAuth()) return;
+  const grid = document.getElementById('postTypeGrid');
+  grid.innerHTML = POST_TYPES.map(t=>`<button type="button" class="type-opt${t.id===selectedPostType?' active':''}" onclick="selectPostType('${t.id}')">${t.label}</button>`).join('');
+  document.getElementById('postText').value='';
+  document.getElementById('postHadithRef').value='';
+  document.getElementById('postLocation').value='';
+  document.getElementById('postImage').value='';
+  document.getElementById('postVideo').value='';
+  document.getElementById('createPostOverlay').classList.add('show');
+};
+window.selectPostType = (id)=>{
+  selectedPostType = id;
+  document.querySelectorAll('.type-opt').forEach(el=> el.classList.toggle('active', el.textContent===POST_TYPES.find(t=>t.id===id).label));
+};
+window.publishPost = async ()=>{
+  if(!requireAuth()) return;
+  const text = document.getElementById('postText').value.trim();
+  const hadithRef = document.getElementById('postHadithRef').value.trim();
+  const location = document.getElementById('postLocation').value.trim();
+  const imageFile = document.getElementById('postImage').files[0];
+  const videoFile = document.getElementById('postVideo').files[0];
+  if(!text && !imageFile && !videoFile){ toast('কিছু লিখুন অথবা মিডিয়া যুক্ত করুন', true); return; }
+  const btn = document.getElementById('publishBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
+  try{
+    let imageURL=null, videoURL=null;
+    if(imageFile){
+      const path = `posts/${currentUser.uid}/${Date.now()}_${imageFile.name}`;
+      const fRef = sRef(storage, path);
+      await uploadBytes(fRef, imageFile);
+      imageURL = await getDownloadURL(fRef);
+    }
+    if(videoFile){
+      const path = `posts/${currentUser.uid}/${Date.now()}_${videoFile.name}`;
+      const fRef = sRef(storage, path);
+      await uploadBytes(fRef, videoFile);
+      videoURL = await getDownloadURL(fRef);
+    }
+    await push(ref(db,'posts'), {
+      uid: currentUser.uid,
+      authorName: currentProfile?.name || currentUser.email,
+      authorRole: currentProfile?.role || '',
+      authorBranch: currentProfile?.branch || '',
+      authorPhoto: currentProfile?.photoURL || '',
+      type: selectedPostType, text, hadithRef, location,
+      imageURL, videoURL, createdAt: Date.now()
+    });
+    toast('পোস্ট প্রকাশিত হয়েছে');
+    closeOverlay('createPostOverlay');
+    go('home');
+  }catch(e){
+    toast('পোস্ট প্রকাশ করা যায়নি', true);
+  }finally{
+    btn.disabled=false; btn.textContent='প্রকাশ করুন';
+  }
+};
+
+/* ============================================================
+   8. ORG SIDEBAR (about/stats/notices)
+   ============================================================ */
+function loadOrgSidebar(){
+  const r1 = ref(db,'settings/about');
+  const h1 = onValue(r1, snap=>{
+    const box = document.getElementById('orgInfoBox');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = '<div class="empty-desc">তথ্য এখনও যুক্ত করা হয়নি।</div>'; return; }
+    const d = snap.val();
+    box.innerHTML = `<div>${esc(d.shortDescription || d.description || '')}</div>`;
+  });
+  activeListeners.push({r:r1, cb:h1});
+
+  const r2 = ref(db,'stats');
+  const h2 = onValue(r2, snap=>{
+    const box = document.getElementById('statsBox');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = '<div class="empty-desc" style="grid-column:1/-1;">পরিসংখ্যান পাওয়া যায়নি।</div>'; return; }
+    const d = snap.val();
+    const rows = [
+      ['মোট সদস্য', d.totalMembers], ['মোট শাখা', d.totalBranches],
+      ['বিতরণকৃত বই', d.totalBooks], ['কার্যক্রম', d.totalActivities]
+    ];
+    box.innerHTML = rows.map(([lbl,val])=>`<div class="stat-box"><div class="stat-num">${val!==undefined?esc(val):'—'}</div><div class="stat-lbl">${lbl}</div></div>`).join('');
+  });
+  activeListeners.push({r:r2, cb:h2});
+
+  const r3 = query(ref(db,'notices'), limitToLast(3));
+  const h3 = onValue(r3, snap=>{
+    const box = document.getElementById('noticesPreview');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = '<div class="empty-desc">কোনো নোটিশ নেই।</div>'; return; }
+    const items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    box.innerHTML = items.map(n=>`<div style="padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px;"><b>${esc(n.title)}</b><div class="muted">${timeAgo(n.createdAt)}</div></div>`).join('');
+  });
+  activeListeners.push({r:r3, cb:h3});
+}
+
+/* ============================================================
+   9. GENERIC LIST PAGE BUILDER (members/books/activities/events/notices/branches)
+   ============================================================ */
+function genericListPage(main, opts){
+  main.innerHTML = `
+    <div class="page-hero"><h1 class="serif">${opts.title}</h1></div>
+    ${opts.filtersHtml||''}
+    <div id="glp-list">${skeletonList(4)}</div>
+  `;
+  const r = ref(db, opts.path);
+  const handler = onValue(r, snap=>{
+    const list = document.getElementById('glp-list');
+    if(!list) return;
+    if(!snap.exists()){ list.innerHTML = emptyState(opts.emptyIcon, opts.emptyTitle, opts.emptyDesc); return; }
+    let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    window.__glpItems = items;
+    list.innerHTML = opts.render(items);
+  }, ()=>{ const list=document.getElementById('glp-list'); if(list) list.innerHTML = errorState(); });
+  activeListeners.push({r, cb:handler});
+}
+
+/* ---- Members ---- */
+function renderMembers(main){
+  genericListPage(main, {
+    title:'সদস্যবৃন্দ', path:'members',
+    emptyIcon:'👥', emptyTitle:'কোনো সদস্যের তথ্য পাওয়া যায়নি।', emptyDesc:'শীঘ্রই সদস্যদের তথ্য যুক্ত করা হবে।',
+    filtersHtml:`<div class="filter-row">
+      <select id="fDistrict" onchange="filterMembers()"><option value="">জেলা</option></select>
+      <select id="fBranch" onchange="filterMembers()"><option value="">শাখা</option></select>
+      <select id="fUnit" onchange="filterMembers()"><option value="">ইউনিট</option></select>
+    </div>`,
+    render: (items)=>{
+      populateMemberFilters(items);
+      return renderMemberCards(items);
+    }
+  });
+}
+function populateMemberFilters(items){
+  const districts = [...new Set(items.map(m=>m.district).filter(Boolean))];
+  const branches = [...new Set(items.map(m=>m.branch).filter(Boolean))];
+  const units = [...new Set(items.map(m=>m.unit).filter(Boolean))];
+  const fd = document.getElementById('fDistrict'), fb = document.getElementById('fBranch'), fu = document.getElementById('fUnit');
+  if(fd) fd.innerHTML = '<option value="">জেলা</option>' + districts.map(d=>`<option>${esc(d)}</option>`).join('');
+  if(fb) fb.innerHTML = '<option value="">শাখা</option>' + branches.map(d=>`<option>${esc(d)}</option>`).join('');
+  if(fu) fu.innerHTML = '<option value="">ইউনিট</option>' + units.map(d=>`<option>${esc(d)}</option>`).join('');
+}
+function renderMemberCards(items){
+  if(!items.length) return emptyState('👥','কোনো সদস্যের তথ্য পাওয়া যায়নি।','ফিল্টার পরিবর্তন করে দেখুন।');
+  return items.map(m=>`
+    <div class="card list-card">
+      ${m.photoURL?`<img class="thumb" style="border-radius:50%;" src="${esc(m.photoURL)}">`:`<span class="thumb" style="border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--green);">${initials(m.name)}</span>`}
+      <div class="info">
+        <div class="title">${esc(m.name||'—')} ${m.online?'<span class="chip chip-green">অনলাইন</span>':''}</div>
+        <div class="sub">${esc(m.role||'')}${m.branch?' • '+esc(m.branch):''}${m.unit?' • '+esc(m.unit):''}</div>
+      </div>
+      <button class="btn btn-sm" onclick="openChat('${m.uid||m.id}','${esc(m.name||'')}')">মেসেজ</button>
+    </div>`).join('');
+}
+window.filterMembers = ()=>{
+  const d = document.getElementById('fDistrict').value;
+  const b = document.getElementById('fBranch').value;
+  const u = document.getElementById('fUnit').value;
+  let items = window.__glpItems || [];
+  if(d) items = items.filter(m=>m.district===d);
+  if(b) items = items.filter(m=>m.branch===b);
+  if(u) items = items.filter(m=>m.unit===u);
+  document.getElementById('glp-list').innerHTML = renderMemberCards(items);
+};
+
+/* ---- Books ---- */
+function renderBooks(main){
+  genericListPage(main, {
+    title:'বইসমূহ', path:'books',
+    emptyIcon:'📚', emptyTitle:'এখনও কোনো বইয়ের তথ্য প্রকাশ করা হয়নি।', emptyDesc:'শীঘ্রই বইয়ের তালিকা যুক্ত করা হবে।',
+    render: items=> items.map(b=>`
+      <div class="card list-card" style="align-items:flex-start;">
+        <img class="thumb" src="${esc(b.imageURL||'')}" onerror="this.style.visibility='hidden'">
+        <div class="info">
+          <div class="title">${esc(b.name||'—')}</div>
+          <div class="sub">লেখকঃ ${esc(b.author||'—')} • প্রকাশকঃ ${esc(b.publisher||'—')}</div>
+          ${b.description?`<div class="sub" style="margin-top:4px;">${esc(b.description)}</div>`:''}
+          <div class="sub" style="margin-top:4px;">বিতরণ এলাকাঃ ${esc(b.distributedArea||'—')} • ${esc(b.distributedDate||'')} • কপিঃ ${esc(b.copies||'—')}</div>
+        </div>
+      </div>`).join('')
+  });
+}
+
+/* ---- Activities ---- */
+function renderActivities(main){
+  genericListPage(main, {
+    title:'কার্যক্রম', path:'activities',
+    emptyIcon:'📰', emptyTitle:'কোনো কার্যক্রমের তথ্য পাওয়া যায়নি।', emptyDesc:'নতুন কার্যক্রম শীঘ্রই যুক্ত হবে।',
+    render: items=> items.map(a=>`
+      <div class="card list-card" style="align-items:flex-start;">
+        <img class="thumb" src="${esc(a.imageURL||'')}" onerror="this.style.visibility='hidden'">
+        <div class="info">
+          <div class="title">${esc(a.title||'—')}</div>
+          <div class="sub">${esc(a.category||'')} • ${timeAgo(a.createdAt)}</div>
+          ${a.description?`<div class="sub" style="margin-top:4px;">${esc(a.description)}</div>`:''}
+        </div>
+      </div>`).join('')
+  });
+}
+
+/* ---- Events ---- */
+function renderEvents(main){
+  genericListPage(main, {
+    title:'ইভেন্ট', path:'events',
+    emptyIcon:'📅', emptyTitle:'কোনো ইভেন্ট পাওয়া যায়নি।', emptyDesc:'নতুন ইভেন্ট আসলে এখানে দেখা যাবে।',
+    render: items=> items.map(e=>`
+      <div class="card list-card" style="align-items:flex-start;">
+        <img class="thumb" src="${esc(e.imageURL||'')}" onerror="this.style.visibility='hidden'">
+        <div class="info">
+          <div class="title">${esc(e.title||'—')}</div>
+          <div class="sub">📅 ${esc(e.date||'')} ${e.time?'• '+esc(e.time):''}</div>
+          <div class="sub">📍 ${esc(e.location||'—')}</div>
+          ${e.description?`<div class="sub" style="margin-top:4px;">${esc(e.description)}</div>`:''}
+        </div>
+      </div>`).join('')
+  });
+}
+
+/* ---- Notices ---- */
+function renderNotices(main){
+  genericListPage(main, {
+    title:'নোটিশ বোর্ড', path:'notices',
+    emptyIcon:'📢', emptyTitle:'কোনো নোটিশ পাওয়া যায়নি।', emptyDesc:'নতুন নোটিশ এখানে প্রকাশিত হবে।',
+    render: items=> items.map(n=>`
+      <div class="card" style="padding:14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;gap:8px;">
+          <div class="title" style="font-weight:600;">${esc(n.title||'—')}</div>
+          ${n.priority?`<span class="chip ${n.priority==='high'?'':'chip-green'}">${esc(n.priority)}</span>`:''}
+        </div>
+        <div class="sub muted" style="margin:4px 0;">${timeAgo(n.createdAt)}</div>
+        <div style="font-size:13.5px;">${esc(n.description||'')}</div>
+      </div>`).join('')
+  });
+}
+
+/* ---- Branches ---- */
+function renderBranches(main){
+  genericListPage(main, {
+    title:'শাখাসমূহ', path:'branches',
+    emptyIcon:'🏢', emptyTitle:'কোনো শাখার তথ্য পাওয়া যায়নি।', emptyDesc:'শীঘ্রই শাখার তালিকা যুক্ত করা হবে।',
+    render: items=> items.map(b=>`
+      <div class="card list-card">
+        <span class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px;">🏢</span>
+        <div class="info">
+          <div class="title">${esc(b.name||'—')}</div>
+          <div class="sub">📍 ${esc(b.location||'—')} • নেতাঃ ${esc(b.leader||'—')}</div>
+          <div class="sub">সদস্যঃ ${esc(b.totalMembers||0)}</div>
+        </div>
+      </div>`).join('')
+  });
+}
+
+/* ============================================================
+   10. SEARCH
+   ============================================================ */
+function renderSearch(main){
+  main.innerHTML = `
+    <div class="page-hero"><h1 class="serif">সার্চ করুন</h1></div>
+    <div class="search-bar"><span>🔍</span><input id="searchInput" placeholder="সদস্য, পোস্ট, বই, হাদিস, কার্যক্রম, শাখা, ইভেন্ট খুঁজুন…" oninput="doSearch()"></div>
+    <div id="searchResults"></div>
+  `;
+  document.getElementById('searchInput').focus();
+}
+let searchCache = null;
+async function ensureSearchCache(){
+  if(searchCache) return searchCache;
+  const paths = ['posts','members','books','activities','branches','events'];
+  const results = {};
+  for(const p of paths){
+    try{
+      const snap = await get(ref(db,p));
+      results[p] = snap.exists() ? Object.entries(snap.val()).map(([id,v])=>({id,...v})) : [];
+    }catch(e){ results[p] = []; }
+  }
+  searchCache = results;
+  return results;
+}
+window.doSearch = async ()=>{
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const box = document.getElementById('searchResults');
+  if(!q){ box.innerHTML=''; return; }
+  box.innerHTML = skeletonList(2);
+  const data = await ensureSearchCache();
+  const match = (obj, fields) => fields.some(f => (obj[f]||'').toString().toLowerCase().includes(q));
+  const posts = data.posts.filter(p=>match(p,['text','authorName','hadithRef'])).slice(0,8);
+  const members = data.members.filter(m=>match(m,['name','role','branch'])).slice(0,8);
+  const books = data.books.filter(b=>match(b,['name','author'])).slice(0,8);
+  const activities = data.activities.filter(a=>match(a,['title','description'])).slice(0,8);
+  const branches = data.branches.filter(b=>match(b,['name','location'])).slice(0,8);
+  const events = data.events.filter(e=>match(e,['title','location'])).slice(0,8);
+  const total = posts.length+members.length+books.length+activities.length+branches.length+events.length;
+  if(!total){ box.innerHTML = emptyState('🔍','কোনো ফলাফল পাওয়া যায়নি।','ভিন্ন শব্দ দিয়ে চেষ্টা করুন।'); return; }
+  let html='';
+  if(members.length) html += `<div class="section-title">সদস্য</div>` + renderMemberCards(members);
+  if(posts.length) html += `<div class="section-title" style="margin-top:14px;">পোস্ট</div>` + posts.map(postCardHtml).join('');
+  if(books.length) html += `<div class="section-title" style="margin-top:14px;">বই</div>` + books.map(b=>`<div class="card list-card"><span class="thumb" style="display:flex;align-items:center;justify-content:center;">📖</span><div class="info"><div class="title">${esc(b.name)}</div><div class="sub">${esc(b.author||'')}</div></div></div>`).join('');
+  if(activities.length) html += `<div class="section-title" style="margin-top:14px;">কার্যক্রম</div>` + activities.map(a=>`<div class="card list-card"><span class="thumb" style="display:flex;align-items:center;justify-content:center;">📰</span><div class="info"><div class="title">${esc(a.title)}</div></div></div>`).join('');
+  if(branches.length) html += `<div class="section-title" style="margin-top:14px;">শাখা</div>` + branches.map(b=>`<div class="card list-card"><span class="thumb" style="display:flex;align-items:center;justify-content:center;">🏢</span><div class="info"><div class="title">${esc(b.name)}</div></div></div>`).join('');
+  if(events.length) html += `<div class="section-title" style="margin-top:14px;">ইভেন্ট</div>` + events.map(e=>`<div class="card list-card"><span class="thumb" style="display:flex;align-items:center;justify-content:center;">📅</span><div class="info"><div class="title">${esc(e.title)}</div></div></div>`).join('');
+  box.innerHTML = html;
+};
+
+/* ============================================================
+   11. PROFILE
+   ============================================================ */
+function renderProfile(main){
+  if(!currentUser){ renderLogin(main); return; }
+  main.innerHTML = `<div id="profileWrap">${skeletonList(2)}</div>`;
+  const r = ref(db,'users/'+currentUser.uid);
+  const handler = onValue(r, snap=>{
+    const wrap = document.getElementById('profileWrap');
+    if(!wrap) return;
+    const p = snap.exists() ? snap.val() : {};
+    currentProfile = p;
+    wrap.innerHTML = `
+      <div class="card" style="overflow:hidden;margin-bottom:14px;">
+        <div style="height:110px;background:linear-gradient(120deg,var(--green),var(--green-dark));${p.coverURL?`background-image:url('${esc(p.coverURL)}');background-size:cover;background-position:center;`:''}"></div>
+        <div style="padding:0 16px 16px;margin-top:-40px;">
+          ${p.photoURL?`<img class="avatar avatar-lg" src="${esc(p.photoURL)}">`:`<span class="avatar avatar-lg">${initials(p.name||currentUser.email)}</span>`}
+          <div style="margin-top:10px;">
+            <div style="font-weight:700;font-size:17px;">${esc(p.name||currentUser.email)}</div>
+            <div class="muted" style="font-size:13px;">${esc(p.role||'সদস্য')} ${p.branch?'• '+esc(p.branch):''} ${p.unit?'• '+esc(p.unit):''}</div>
+            <div class="muted" style="font-size:12px;margin-top:2px;">সদস্য আইডিঃ ${esc(p.memberId||'—')} • যোগদানঃ ${esc(p.joinDate||'—')}</div>
+            ${p.bio?`<div style="font-size:13.5px;margin-top:8px;">${esc(p.bio)}</div>`:''}
+            <button class="btn btn-sm" style="margin-top:10px;" onclick="openEditProfile()">প্রোফাইল সম্পাদনা</button>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <button class="active" data-tab="posts" onclick="switchProfileTab('posts')">পোস্ট</button>
+        <button data-tab="photos" onclick="switchProfileTab('photos')">ছবি</button>
+        <button data-tab="videos" onclick="switchProfileTab('videos')">ভিডিও</button>
+        <button data-tab="activities" onclick="switchProfileTab('activities')">কার্যক্রম</button>
+      </div>
+      <div id="profileTabContent">${skeletonList(2)}</div>
+    `;
+    switchProfileTab('posts');
+  });
+  activeListeners.push({r, cb:handler});
+}
+window.switchProfileTab = (tab)=>{
+  document.querySelectorAll('.tabbar button').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  const target = document.getElementById('profileTabContent');
+  if(!target || !currentUser) return;
+  target.innerHTML = skeletonList(2);
+  const r = ref(db,'posts');
+  onValue(r, snap=>{
+    if(!snap.exists()){ target.innerHTML = emptyState('📝','এখনও কিছু নেই।','এই বিভাগে কোনো তথ্য পাওয়া যায়নি।'); return; }
+    let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items = items.filter(p=>p.uid===currentUser.uid);
+    if(tab==='photos') items = items.filter(p=>p.imageURL);
+    if(tab==='videos') items = items.filter(p=>p.videoURL);
+    if(tab==='activities') items = items.filter(p=>p.type==='activity');
+    if(!items.length){ target.innerHTML = emptyState('📝','এখনও কিছু নেই।','এই বিভাগে কোনো তথ্য পাওয়া যায়নি।'); return; }
+    items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    target.innerHTML = items.map(postCardHtml).join('');
+  }, {onlyOnce:true});
+};
+window.openEditProfile = ()=>{
+  const p = currentProfile || {};
+  const sheet = document.getElementById('genericSheet');
+  sheet.innerHTML = `
+    <div class="sheet-head"><span class="sheet-title">প্রোফাইল সম্পাদনা</span><button class="icon-btn" style="color:var(--text)" onclick="closeOverlay('genericOverlay')">✕</button></div>
+    <div class="field"><label>নাম</label><input id="epName" value="${esc(p.name||'')}"></div>
+    <div class="field"><label>বায়ো</label><textarea id="epBio">${esc(p.bio||'')}</textarea></div>
+    <div class="field"><label>শাখা</label><input id="epBranch" value="${esc(p.branch||'')}"></div>
+    <div class="field"><label>ইউনিট</label><input id="epUnit" value="${esc(p.unit||'')}"></div>
+    <div class="field"><label>প্রোফাইল ছবি</label><input type="file" id="epPhoto" accept="image/*"></div>
+    <button class="btn btn-primary btn-block" onclick="saveProfile()">সংরক্ষণ করুন</button>
+  `;
+  document.getElementById('genericOverlay').classList.add('show');
+};
+window.saveProfile = async ()=>{
+  if(!currentUser) return;
+  const updates = {
+    name: document.getElementById('epName').value.trim(),
+    bio: document.getElementById('epBio').value.trim(),
+    branch: document.getElementById('epBranch').value.trim(),
+    unit: document.getElementById('epUnit').value.trim(),
+  };
+  const file = document.getElementById('epPhoto').files[0];
+  try{
+    if(file){
+      const fRef = sRef(storage, `profiles/${currentUser.uid}/${Date.now()}_${file.name}`);
+      await uploadBytes(fRef, file);
+      updates.photoURL = await getDownloadURL(fRef);
+    }
+    await update(ref(db,'users/'+currentUser.uid), updates);
+    toast('প্রোফাইল আপডেট হয়েছে');
+    closeOverlay('genericOverlay');
+    go('profile');
+  }catch(e){ toast('আপডেট ব্যর্থ হয়েছে', true); }
+};
+
+/* ============================================================
+   12. MESSENGER
+   ============================================================ */
+function convoId(a,b){ return [a,b].sort().join('_'); }
+function renderMessages(main){
+  if(!currentUser){ renderLogin(main); return; }
+  main.innerHTML = `<div class="page-hero"><h1 class="serif">মেসেজ</h1></div><div id="convoList">${skeletonList(3)}</div>`;
+  const r = ref(db,'userConversations/'+currentUser.uid);
+  const handler = onValue(r, async snap=>{
+    const list = document.getElementById('convoList');
+    if(!list) return;
+    if(!snap.exists()){ list.innerHTML = emptyState('💬','কোনো কথোপকথন নেই।','কোনো সদস্যকে মেসেজ পাঠিয়ে শুরু করুন।'); return; }
+    const convos = [];
+    snap.forEach(c=> convos.push({otherUid:c.key, ...c.val()}));
+    convos.sort((a,b)=>(b.lastAt||0)-(a.lastAt||0));
+    list.innerHTML = convos.map(c=>`
+      <div class="card convo-item" onclick="openChat('${c.otherUid}','${esc(c.otherName||'সদস্য')}')">
+        <span class="avatar">${initials(c.otherName)}</span>
+        <div class="info" style="flex:1;">
+          <div class="title">${esc(c.otherName||'সদস্য')}</div>
+          <div class="sub">${esc(c.lastMessage||'')}</div>
+        </div>
+        <div class="muted" style="font-size:11px;">${timeAgo(c.lastAt)}</div>
+      </div>`).join('');
+  });
+  activeListeners.push({r,cb:handler});
+}
+window.openChat = (uid,name)=>{
+  if(!requireAuth()) return;
+  activeChatUid = uid;
+  window.__chatOtherName = name;
+  go('chat');
+};
+function renderChatPage(main){
+  if(!currentUser || !activeChatUid){ go('messages'); return; }
+  main.innerHTML = `
+    <div class="page-hero" style="display:flex;align-items:center;gap:10px;padding-top:10px;">
+      <button class="icon-btn" style="color:var(--text)" onclick="go('messages')">←</button>
+      <h1 class="serif" style="font-size:16px;">${esc(window.__chatOtherName||'')}</h1>
+    </div>
+    <div class="msg-wrap">
+      <div class="msg-scroll" id="msgScroll">${skeletonList(2)}</div>
+      <div class="msg-input-bar">
+        <input id="msgInput" placeholder="মেসেজ লিখুন…" onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="btn btn-primary" onclick="sendMsg()">পাঠান</button>
+      </div>
+    </div>
+  `;
+  const cid = convoId(currentUser.uid, activeChatUid);
+  const r = ref(db,'messages/'+cid);
+  const handler = onValue(r, snap=>{
+    const scroll = document.getElementById('msgScroll');
+    if(!scroll) return;
+    if(!snap.exists()){ scroll.innerHTML = emptyState('💬','এখনও কোনো মেসেজ নেই।','প্রথম মেসেজটি পাঠান।'); return; }
+    let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    scroll.innerHTML = items.map(m=>`
+      <div class="msg-row">
+        <div class="msg-bubble ${m.from===currentUser.uid?'msg-out':'msg-in'}">
+          ${m.imageURL?`<img src="${esc(m.imageURL)}" style="border-radius:8px;max-width:180px;margin-bottom:4px;">`:''}
+          ${m.text?esc(m.text):''}
+        </div>
+      </div>`).join('');
+    scroll.scrollTop = scroll.scrollHeight;
+  });
+  activeListeners.push({r,cb:handler});
+}
+window.sendMsg = async ()=>{
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if(!text || !currentUser || !activeChatUid) return;
+  const cid = convoId(currentUser.uid, activeChatUid);
+  await push(ref(db,'messages/'+cid), { from: currentUser.uid, to: activeChatUid, text, createdAt: Date.now(), seen:false });
+  await update(ref(db,`userConversations/${currentUser.uid}/${activeChatUid}`), { otherName: window.__chatOtherName||'', lastMessage: text, lastAt: Date.now() });
+  await update(ref(db,`userConversations/${activeChatUid}/${currentUser.uid}`), { otherName: currentProfile?.name||currentUser.email, lastMessage: text, lastAt: Date.now() });
+  input.value='';
+};
+
+/* ============================================================
+   13. GROUPS
+   ============================================================ */
+function renderGroups(main){
+  genericListPage(main, {
+    title:'গ্রুপ আলোচনা', path:'groups',
+    emptyIcon:'👨‍👩‍👦', emptyTitle:'কোনো গ্রুপ পাওয়া যায়নি।', emptyDesc:'শীঘ্রই গ্রুপ যুক্ত করা হবে।',
+    render: items=> items.map(g=>`
+      <div class="card list-card" onclick="openGroup('${g.id}','${esc(g.name||'')}')" style="cursor:pointer;">
+        <span class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px;">👥</span>
+        <div class="info">
+          <div class="title">${esc(g.name||'—')}</div>
+          <div class="sub">${esc(g.description||'')}</div>
+        </div>
+      </div>`).join('')
+  });
+}
+window.openGroup = (id,name)=>{ window.__groupId=id; window.__groupName=name; go('group'); };
+function renderGroupPage(main){
+  const gid = window.__groupId;
+  if(!gid){ go('groups'); return; }
+  main.innerHTML = `
+    <div class="page-hero" style="display:flex;align-items:center;gap:10px;padding-top:10px;">
+      <button class="icon-btn" style="color:var(--text)" onclick="go('groups')">←</button>
+      <h1 class="serif" style="font-size:16px;">${esc(window.__groupName||'')}</h1>
+    </div>
+    <div id="groupMsgs">${skeletonList(2)}</div>
+    ${currentUser?`<div class="msg-input-bar" style="border-top:none;margin-top:10px;">
+      <input id="groupInput" placeholder="বার্তা লিখুন…" onkeydown="if(event.key==='Enter')sendGroupMsg()">
+      <button class="btn btn-primary" onclick="sendGroupMsg()">পাঠান</button>
+    </div>`:''}
+  `;
+  const r = ref(db,'groupMessages/'+gid);
+  const handler = onValue(r, snap=>{
+    const box = document.getElementById('groupMsgs');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = emptyState('💬','এখনও কোনো আলোচনা হয়নি।','প্রথম বার্তাটি লিখুন।'); return; }
+    let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    box.innerHTML = items.map(m=>`
+      <div class="card" style="padding:10px 14px;margin-bottom:8px;">
+        <div class="comment-name">${esc(m.name||'সদস্য')}</div>
+        <div class="comment-text" style="margin-top:2px;">${esc(m.text||'')}</div>
+        <div class="muted" style="font-size:11px;margin-top:3px;">${timeAgo(m.createdAt)}</div>
+      </div>`).join('');
+  });
+  activeListeners.push({r,cb:handler});
+}
+window.sendGroupMsg = async ()=>{
+  if(!requireAuth()) return;
+  const input = document.getElementById('groupInput');
+  const text = input.value.trim();
+  if(!text) return;
+  await push(ref(db,'groupMessages/'+window.__groupId), { uid:currentUser.uid, name: currentProfile?.name||currentUser.email, text, createdAt: Date.now() });
+  input.value='';
+};
+
+/* ============================================================
+   14. DONATION
+   ============================================================ */
+function renderDonation(main){
+  main.innerHTML = `<div class="page-hero"><h1 class="serif">দান করুন</h1></div><div id="donationBox">${skeletonList(1)}</div>`;
+  const r = ref(db,'settings/donation');
+  const handler = onValue(r, snap=>{
+    const box = document.getElementById('donationBox');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = emptyState('💖','দানের তথ্য এখনও যুক্ত করা হয়নি।','শীঘ্রই তথ্য যুক্ত করা হবে।'); return; }
+    const d = snap.val();
+    const methods = [['bKash', d.bkash, '#E2136E'], ['Nagad', d.nagad, '#F6921E'], ['Rocket', d.rocket, '#7B2D8E']];
+    box.innerHTML = `
+      ${d.message?`<div class="card" style="padding:14px;margin-bottom:12px;">${esc(d.message)}</div>`:''}
+      ${methods.filter(m=>m[1]).map(([label,number,color])=>`
+        <div class="card" style="padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-weight:700;color:${color};">${label}</div>
+            <div class="muted" style="font-size:12.5px;">Personal / Merchant Number</div>
+          </div>
+          <div style="font-weight:700;font-size:16px;">${esc(number)}</div>
+        </div>`).join('')}
+      ${!methods.some(m=>m[1]) ? emptyState('💖','দানের তথ্য এখনও যুক্ত করা হয়নি।','শীঘ্রই তথ্য যুক্ত করা হবে।') : ''}
+    `;
+  }, ()=>{ const box=document.getElementById('donationBox'); if(box) box.innerHTML = errorState(); });
+  activeListeners.push({r,cb:handler});
+}
+
+/* ============================================================
+   15. MEMBERSHIP APPLICATION
+   ============================================================ */
+function renderJoin(main){
+  main.innerHTML = `
+    <div class="page-hero"><h1 class="serif">সদস্য হতে আবেদন করুন</h1></div>
+    <div class="card" style="padding:16px;">
+      <div class="field"><label>নাম</label><input id="jName"></div>
+      <div class="field"><label>মোবাইল</label><input id="jMobile"></div>
+      <div class="field"><label>ইমেইল</label><input id="jEmail" type="email"></div>
+      <div class="field"><label>ঠিকানা</label><input id="jAddress"></div>
+      <div class="field"><label>জেলা</label><input id="jDistrict"></div>
+      <div class="field"><label>উপজেলা</label><input id="jUpazila"></div>
+      <div class="field"><label>ইউনিয়ন</label><input id="jUnion"></div>
+      <div class="field"><label>গ্রাম</label><input id="jVillage"></div>
+      <div class="field"><label>পেশা</label><input id="jOccupation"></div>
+      <div class="field"><label>প্রোফাইল ছবি</label><input type="file" id="jPhoto" accept="image/*"></div>
+      <div class="field"><label>কেন যুক্ত হতে চান?</label><textarea id="jReason"></textarea></div>
+      <button class="btn btn-primary btn-block" id="jSubmitBtn" onclick="submitApplication()">আবেদন জমা দিন</button>
+    </div>
+  `;
+}
+window.submitApplication = async ()=>{
+  const data = {
+    name: document.getElementById('jName').value.trim(),
+    mobile: document.getElementById('jMobile').value.trim(),
+    email: document.getElementById('jEmail').value.trim(),
+    address: document.getElementById('jAddress').value.trim(),
+    district: document.getElementById('jDistrict').value.trim(),
+    upazila: document.getElementById('jUpazila').value.trim(),
+    union: document.getElementById('jUnion').value.trim(),
+    village: document.getElementById('jVillage').value.trim(),
+    occupation: document.getElementById('jOccupation').value.trim(),
+    reason: document.getElementById('jReason').value.trim(),
+  };
+  if(!data.name || !data.mobile){ toast('নাম ও মোবাইল আবশ্যক', true); return; }
+  const btn = document.getElementById('jSubmitBtn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+  try{
+    const file = document.getElementById('jPhoto').files[0];
+    if(file){
+      const fRef = sRef(storage, `applications/${Date.now()}_${file.name}`);
+      await uploadBytes(fRef, file);
+      data.photoURL = await getDownloadURL(fRef);
+    }
+    data.status = 'pending';
+    data.createdAt = Date.now();
+    await push(ref(db,'membershipApplications'), data);
+    toast('আবেদন সফলভাবে জমা হয়েছে');
+    go('home');
+  }catch(e){ toast('আবেদন জমা দেওয়া যায়নি', true); }
+  finally{ btn.disabled=false; btn.textContent='আবেদন জমা দিন'; }
+};
+
+/* ============================================================
+   16. ABOUT / CONTACT
+   ============================================================ */
+function renderAbout(main){
+  main.innerHTML = `<div class="page-hero"><h1 class="serif">আমাদের সম্পর্কে</h1></div><div id="aboutBox">${skeletonList(2)}</div>`;
+  const r = ref(db,'settings/about');
+  const handler = onValue(r, snap=>{
+    const box = document.getElementById('aboutBox');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = emptyState('ℹ️','তথ্য এখনও যুক্ত করা হয়নি।','শীঘ্রই তথ্য যুক্ত করা হবে।'); return; }
+    const d = snap.val();
+    box.innerHTML = `<div class="card" style="padding:16px;line-height:1.9;font-size:14.5px;">
+      ${d.description?`<p>${esc(d.description)}</p>`:''}
+      ${d.mission?`<h3 class="serif" style="margin-top:14px;font-size:15px;">লক্ষ্য</h3><p>${esc(d.mission)}</p>`:''}
+      ${d.activities?`<h3 class="serif" style="margin-top:14px;font-size:15px;">কার্যক্রম</h3><p>${esc(d.activities)}</p>`:''}
+    </div>`;
+  }, ()=>{ const box=document.getElementById('aboutBox'); if(box) box.innerHTML=errorState(); });
+  activeListeners.push({r,cb:handler});
+}
+function renderContact(main){
+  main.innerHTML = `<div class="page-hero"><h1 class="serif">যোগাযোগ</h1></div><div id="contactBox">${skeletonList(1)}</div>`;
+  const r = ref(db,'settings/contact');
+  const handler = onValue(r, snap=>{
+    const box = document.getElementById('contactBox');
+    if(!box) return;
+    if(!snap.exists()){ box.innerHTML = emptyState('📞','যোগাযোগের তথ্য এখনও যুক্ত করা হয়নি।','শীঘ্রই তথ্য যুক্ত করা হবে।'); return; }
+    const d = snap.val();
+    box.innerHTML = `<div class="card" style="padding:16px;font-size:14px;line-height:2;">
+      ${d.phone?`<div>📞 ${esc(d.phone)}</div>`:''}
+      ${d.email?`<div>✉️ ${esc(d.email)}</div>`:''}
+      ${d.address?`<div>📍 ${esc(d.address)}</div>`:''}
+      ${d.facebook?`<div>📘 ${esc(d.facebook)}</div>`:''}
+    </div>`;
+  }, ()=>{ const box=document.getElementById('contactBox'); if(box) box.innerHTML=errorState(); });
+  activeListeners.push({r,cb:handler});
+}
+
+/* ============================================================
+   17. NOTIFICATIONS
+   ============================================================ */
+function renderNotifications(main){
+  if(!currentUser){ renderLogin(main); return; }
+  main.innerHTML = `<div class="page-hero"><h1 class="serif">নোটিফিকেশন</h1></div><div id="notifList">${skeletonList(3)}</div>`;
+  const r = ref(db,'notifications/'+currentUser.uid);
+  const handler = onValue(r, snap=>{
+    const list = document.getElementById('notifList');
+    if(!list) return;
+    if(!snap.exists()){ list.innerHTML = emptyState('🔔','কোনো নোটিফিকেশন নেই।','নতুন কার্যকলাপ এখানে দেখা যাবে।'); return; }
+    let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+    items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    list.innerHTML = items.map(n=>`
+      <div class="notif-item ${n.read===false?'unread':''}">
+        ${n.read===false?'<span class="notif-dot"></span>':'<span style="width:8px;"></span>'}
+        <div>
+          <div style="font-size:13.5px;">${esc(n.text||'')}</div>
+          <div class="muted" style="font-size:11.5px;margin-top:2px;">${timeAgo(n.createdAt)}</div>
+        </div>
+      </div>`).join('');
+    items.forEach(n=>{ if(n.read===false) update(ref(db,`notifications/${currentUser.uid}/${n.id}`),{read:true}); });
+  });
+  activeListeners.push({r,cb:handler});
+}
+
+/* ============================================================
+   18. DASHBOARD
+   ============================================================ */
+function renderDashboard(main){
+  if(!currentUser){ renderLogin(main); return; }
+  main.innerHTML = `
+    <div class="page-hero"><h1 class="serif">আমার ড্যাশবোর্ড</h1></div>
+    <div class="tabbar">
+      <button class="active" data-dtab="fees" onclick="switchDashTab('fees')">ফি</button>
+      <button data-dtab="books" onclick="switchDashTab('books')">বই ইতিহাস</button>
+      <button data-dtab="apps" onclick="switchDashTab('apps')">আমার আবেদন</button>
+    </div>
+    <div id="dashContent">${skeletonList(2)}</div>
+  `;
+  switchDashTab('fees');
+}
+window.switchDashTab = (tab)=>{
+  document.querySelectorAll('[data-dtab]').forEach(b=>b.classList.toggle('active', b.dataset.dtab===tab));
+  const box = document.getElementById('dashContent');
+  if(!box || !currentUser) return;
+  box.innerHTML = skeletonList(1);
+  if(tab==='fees'){
+    const r = ref(db,'memberFees/'+currentUser.uid);
+    onValue(r, snap=>{
+      if(!snap.exists()){ box.innerHTML = emptyState('💳','কোনো ফি তথ্য পাওয়া যায়নি।','আপনার ফি তথ্য এখানে প্রদর্শিত হবে।'); return; }
+      const d = snap.val();
+      box.innerHTML = `
+        <div class="stat-grid" style="margin-bottom:14px;">
+          <div class="stat-box"><div class="stat-num">${esc(d.monthlyFee||'—')}</div><div class="stat-lbl">মাসিক ফি</div></div>
+          <div class="stat-box"><div class="stat-num">${esc(d.weeklyFee||'—')}</div><div class="stat-lbl">সাপ্তাহিক ফি</div></div>
+          <div class="stat-box"><div class="stat-num">${esc(d.totalPaid||'—')}</div><div class="stat-lbl">মোট পরিশোধিত</div></div>
+          <div class="stat-box"><div class="stat-num">${esc(d.due||'—')}</div><div class="stat-lbl">বকেয়া</div></div>
+        </div>`;
+    }, {onlyOnce:true});
+  } else if(tab==='books'){
+    const r = ref(db,'memberBookHistory/'+currentUser.uid);
+    onValue(r, snap=>{
+      if(!snap.exists()){ box.innerHTML = emptyState('📚','কোনো বই সংগ্রহের তথ্য নেই।','আপনার বই ইতিহাস এখানে দেখা যাবে।'); return; }
+      let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+      box.innerHTML = items.map(b=>`
+        <div class="card list-card">
+          <span class="thumb" style="display:flex;align-items:center;justify-content:center;">📖</span>
+          <div class="info">
+            <div class="title">${esc(b.bookName||'—')}</div>
+            <div class="sub">তারিখঃ ${esc(b.date||'—')} • মূল্যঃ ${esc(b.price||'—')}</div>
+          </div>
+        </div>`).join('');
+    }, {onlyOnce:true});
+  } else if(tab==='apps'){
+    const r = ref(db,'membershipApplications');
+    onValue(r, snap=>{
+      if(!snap.exists()){ box.innerHTML = emptyState('📋','কোনো আবেদন পাওয়া যায়নি।','আপনার সদস্যপদ আবেদন এখানে দেখা যাবে।'); return; }
+      let items=[]; snap.forEach(c=>items.push({id:c.key,...c.val()}));
+      items = items.filter(a=> currentUser.email && a.email===currentUser.email);
+      if(!items.length){ box.innerHTML = emptyState('📋','কোনো আবেদন পাওয়া যায়নি।','আপনার সদস্যপদ আবেদন এখানে দেখা যাবে।'); return; }
+      box.innerHTML = items.map(a=>`
+        <div class="card" style="padding:14px;margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;">
+            <b>${esc(a.name)}</b>
+            <span class="chip ${a.status==='approved'?'chip-green':''}">${esc(a.status||'pending')}</span>
+          </div>
+          <div class="muted" style="font-size:12px;margin-top:4px;">${timeAgo(a.createdAt)}</div>
+        </div>`).join('');
+    }, {onlyOnce:true});
+  }
+};
+
+/* ============================================================
+   19. SETTINGS (incl. Dark Mode)
+   ============================================================ */
+function renderSettings(main){
+  const theme = localStorage.getItem('theme') || 'light';
+  main.innerHTML = `
+    <div class="page-hero"><h1 class="serif">সেটিংস</h1></div>
+    <div class="card" style="padding:6px 0;margin-bottom:14px;">
+      ${currentUser?`<a class="nav-item" style="padding:14px 16px;" onclick="openEditProfile()"><span class="ic">✏️</span> প্রোফাইল সম্পাদনা</a>`:''}
+      ${currentUser?`<a class="nav-item" style="padding:14px 16px;" onclick="openChangePassword()"><span class="ic">🔒</span> পাসওয়ার্ড পরিবর্তন</a>`:''}
+      <div class="nav-item" style="padding:14px 16px;justify-content:space-between;">
+        <span><span class="ic">🌙</span> ডার্ক মোড</span>
+        <input type="checkbox" id="darkToggle" ${theme==='dark'?'checked':''} onchange="toggleDark()">
+      </div>
+      <div class="nav-item" style="padding:14px 16px;justify-content:space-between;">
+        <span><span class="ic">🌐</span> ভাষা</span>
+        <select id="langSelect" style="width:auto;padding:6px 10px;border-radius:8px;">
+          <option value="bn" selected>বাংলা</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      ${currentUser?`<a class="nav-item" style="padding:14px 16px;color:var(--danger);" onclick="doLogout()"><span class="ic">🚪</span> লগআউট</a>`:`<a class="nav-item" style="padding:14px 16px;" onclick="go('login')"><span class="ic">🔑</span> লগইন করুন</a>`}
+    </div>
+  `;
+}
+window.toggleDark = ()=>{
+  const dark = document.getElementById('darkToggle').checked;
+  applyTheme(dark?'dark':'light');
+};
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme==='dark'?'dark':'light');
+  localStorage.setItem('theme', theme);
+}
+window.openChangePassword = ()=>{
+  const sheet = document.getElementById('genericSheet');
+  sheet.innerHTML = `
+    <div class="sheet-head"><span class="sheet-title">পাসওয়ার্ড পরিবর্তন</span><button class="icon-btn" style="color:var(--text)" onclick="closeOverlay('genericOverlay')">✕</button></div>
+    <div class="empty-desc" style="padding:6px 0 14px;">পাসওয়ার্ড পরিবর্তন করতে আপনার ইমেইলে একটি রিসেট লিংক পাঠানো হবে।</div>
+    <button class="btn btn-primary btn-block" onclick="sendChangePasswordEmail()">রিসেট লিংক পাঠান</button>
+  `;
+  document.getElementById('genericOverlay').classList.add('show');
+};
+window.sendChangePasswordEmail = async ()=>{
+  if(!currentUser?.email) return;
+  try{ await sendPasswordResetEmail(auth, currentUser.email); toast('রিসেট লিংক পাঠানো হয়েছে'); closeOverlay('genericOverlay'); }
+  catch(e){ toast('ব্যর্থ হয়েছে', true); }
+};
+
+/* ============================================================
+   20. INIT
+   ============================================================ */
+applyTheme(localStorage.getItem('theme') || 'light');
+
+window.addEventListener('offline', ()=> toast('ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়েছে', true));
+
+go('home');
+</script>
+</body>
+</html>
