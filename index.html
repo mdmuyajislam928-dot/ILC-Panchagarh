@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ইসলামী সাহিত্য কেন্দ্র, পঞ্চগড় | জ্ঞান • দাওয়াহ • সেবা</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -27,6 +32,7 @@
             }
         }
     </script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -39,6 +45,9 @@
         .skeleton { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
         .modal-overlay { background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .loader-spinner { border: 4px solid rgba(10,92,54,0.3); border-top: 4px solid #0A5C36; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        .dark .loader-spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #fff; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-bgcol text-textcol dark:bg-gray-900 dark:text-gray-100 flex flex-col h-screen overflow-hidden text-sm md:text-base transition-colors duration-200">
@@ -50,11 +59,11 @@
                 <i class="fas fa-mosque"></i>
             </div>
             <div>
-                <h1 class="font-bold text-lg md:text-xl leading-none text-textcol dark:text-white tracking-tight">ইসলামী সাহিত্য কেন্দ্র</h1>
+                <h1 class="font-bold text-lg md:text-xl leading-none text-textcol dark:text-white tracking-tight" id="header-org-name">ইসলামী সাহিত্য কেন্দ্র</h1>
                 <p class="text-[10px] md:text-xs text-muted font-semibold tracking-widest mt-1"><span class="text-primary dark:text-gold">জ্ঞান</span> • দাওয়াহ • সেবা</p>
             </div>
         </div>
-        <div class="flex items-center space-x-3 md:space-x-5">
+        <div class="flex items-center space-x-3 md:space-x-4">
             <button onclick="toggleDarkMode()" class="text-muted hover:text-primary transition w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 outline-none">
                 <i class="fas fa-moon dark:hidden"></i>
                 <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
@@ -74,39 +83,37 @@
         </div>
     </header>
 
-    <!-- Main Body Layout -->
+    <!-- Main Layout -->
     <div class="flex flex-1 overflow-hidden relative">
         
         <!-- Left Sidebar Desktop -->
-        <aside class="hidden md:flex flex-col w-64 border-r border-bordercol dark:border-gray-700 bg-white dark:bg-gray-800 overflow-y-auto no-scrollbar py-4 z-10 shadow-[4px_0_10px_rgba(0,0,0,0.02)]">
+        <aside class="hidden md:flex flex-col w-64 border-r border-bordercol dark:border-gray-700 bg-white dark:bg-gray-800 overflow-y-auto no-scrollbar py-4 z-10">
             <div class="px-4 pb-2 mb-2 border-b border-bordercol dark:border-gray-700">
                 <p class="text-xs font-bold text-muted uppercase tracking-wider">মেনু</p>
             </div>
-            <nav class="space-y-1 px-2">
+            <nav class="space-y-1 px-2" id="desktop-nav">
                 <a href="#" onclick="navigateTo('home'); return false;" class="nav-link nav-home flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-home w-5 text-center text-muted"></i> <span>হোম</span></a>
                 <a href="#" onclick="navigateTo('search'); return false;" class="nav-link nav-search flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-search w-5 text-center text-muted"></i> <span>সার্চ</span></a>
                 <a href="#" onclick="navigateTo('members'); return false;" class="nav-link nav-members flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-users w-5 text-center text-muted"></i> <span>সদস্যবৃন্দ</span></a>
-                <a href="#" onclick="navigateTo('branches'); return false;" class="nav-link nav-branches flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-code-branch w-5 text-center text-muted"></i> <span>শাখাসমূহ</span></a>
-                <a href="#" onclick="navigateTo('messages'); return false;" class="nav-link nav-messages flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-comment-dots w-5 text-center text-muted"></i> <span>মেসেজ</span></a>
                 <a href="#" onclick="navigateTo('books'); return false;" class="nav-link nav-books flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-book w-5 text-center text-muted"></i> <span>বইসমূহ</span></a>
-                <a href="#" onclick="navigateTo('activities'); return false;" class="nav-link nav-activities flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-hands-helping w-5 text-center text-muted"></i> <span>কার্যক্রম</span></a>
-                <a href="#" onclick="navigateTo('events'); return false;" class="nav-link nav-events flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-calendar-alt w-5 text-center text-muted"></i> <span>ইভেন্ট</span></a>
-                <a href="#" onclick="navigateTo('notices'); return false;" class="nav-link nav-notices flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-bullhorn w-5 text-center text-muted"></i> <span>নোটিশ বোর্ড</span></a>
+                <a href="#" onclick="navigateTo('notices'); return false;" class="nav-link nav-notices flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-bullhorn w-5 text-center text-muted"></i> <span>নোটিশ ও ইভেন্ট</span></a>
                 <a href="#" onclick="navigateTo('donations'); return false;" class="nav-link nav-donations flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-hand-holding-heart w-5 text-center text-muted"></i> <span>দান/অনুদান</span></a>
                 <div class="pt-4 mt-2 border-t border-bordercol dark:border-gray-700"></div>
                 <a href="#" onclick="navigateTo('profile'); return false;" class="nav-link nav-profile flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-user-circle w-5 text-center text-muted"></i> <span>প্রোফাইল</span></a>
-                <a href="#" onclick="navigateTo('join'); return false;" class="nav-link nav-join flex items-center space-x-3 px-4 py-2.5 rounded-lg text-textcol dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"><i class="fas fa-user-plus w-5 text-center text-muted"></i> <span>সদস্য হোন</span></a>
+                
+                <!-- Admin Only Menu Item -->
+                <a href="#" onclick="navigateTo('admin'); return false;" class="admin-only hidden nav-link nav-admin flex items-center space-x-3 px-4 py-2.5 rounded-lg text-white bg-primary hover:bg-darkgreen transition mt-4 shadow-md font-bold"><i class="fas fa-user-shield w-5 text-center"></i> <span>অ্যাডমিন প্যানেল</span></a>
             </nav>
         </aside>
 
-        <!-- Dynamic Main Content Area -->
-        <main id="main-content" class="flex-1 overflow-y-auto p-4 md:p-6 pb-20 md:pb-6 relative scroll-smooth">
-            <!-- Rendered by JS -->
+        <!-- Main Content Area -->
+        <main id="main-content" class="flex-1 overflow-y-auto p-4 md:p-6 pb-20 md:pb-6 relative scroll-smooth bg-bgcol dark:bg-gray-900">
+            <!-- Content injected via JS -->
         </main>
 
         <!-- Right Sidebar Desktop -->
-        <aside class="hidden lg:flex flex-col w-80 border-l border-bordercol dark:border-gray-700 bg-white dark:bg-gray-800 overflow-y-auto no-scrollbar p-5 space-y-6 z-10 shadow-[-4px_0_10px_rgba(0,0,0,0.02)]">
-            <div class="bg-bgcol dark:bg-gray-900 rounded-xl p-4 border border-bordercol dark:border-gray-700">
+        <aside class="hidden lg:flex flex-col w-80 border-l border-bordercol dark:border-gray-700 bg-white dark:bg-gray-800 overflow-y-auto no-scrollbar p-5 space-y-6 z-10">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-bordercol dark:border-gray-700">
                 <h3 class="font-bold text-primary mb-2 flex items-center space-x-2"><i class="fas fa-info-circle"></i> <span>আমাদের সম্পর্কে</span></h3>
                 <div id="sidebar-org-info">
                     <div class="animate-pulse space-y-2"><div class="h-2 bg-gray-200 dark:bg-gray-700 rounded w-full"></div><div class="h-2 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div></div>
@@ -137,13 +144,12 @@
             <i class="fas fa-search text-[20px] mb-1"></i><span class="text-[10px] font-medium leading-none">সার্চ</span>
         </a>
         <div class="w-1/5 flex justify-center relative">
-            <a href="#" onclick="openCreatePostModal(); return false;" class="absolute -top-6 flex flex-col items-center p-2 text-white bg-primary rounded-full w-14 h-14 justify-center shadow-lg shadow-green-600/30 border-4 border-bgcol dark:border-gray-900 hover:bg-darkgreen transition transform hover:scale-105">
+            <a href="#" onclick="window.openCreatePostModal(); return false;" class="absolute -top-6 flex flex-col items-center p-2 text-white bg-primary rounded-full w-14 h-14 justify-center shadow-lg shadow-green-600/30 border-4 border-bgcol dark:border-gray-900 hover:bg-darkgreen transition transform hover:scale-105">
                 <i class="fas fa-plus text-xl"></i>
             </a>
         </div>
-        <a href="#" onclick="navigateTo('messages'); return false;" class="nav-link nav-messages flex flex-col items-center p-2 text-muted hover:text-primary transition w-1/5 relative">
-            <i class="fas fa-comment-dots text-[22px] mb-1"></i><span class="text-[10px] font-medium leading-none">মেসেজ</span>
-            <span class="notif-badge hidden absolute top-1 right-2 bg-red-500 text-white text-[8px] rounded-full w-3 h-3 items-center justify-center font-bold border border-white dark:border-gray-800">0</span>
+        <a href="#" onclick="navigateTo('notices'); return false;" class="nav-link nav-notices flex flex-col items-center p-2 text-muted hover:text-primary transition w-1/5 relative">
+            <i class="fas fa-bullhorn text-[22px] mb-1"></i><span class="text-[10px] font-medium leading-none">নোটিশ</span>
         </a>
         <a href="#" onclick="navigateTo('profile'); return false;" class="nav-link nav-profile flex flex-col items-center p-2 text-muted hover:text-primary transition w-1/5">
             <i class="fas fa-user-circle text-[22px] mb-1"></i><span class="text-[10px] font-medium leading-none">প্রোফাইল</span>
@@ -159,14 +165,10 @@
             </div>
             <div class="p-2 space-y-1 flex-1 overflow-y-auto">
                 <a href="#" onclick="navigateTo('members'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-users w-6 text-center text-primary dark:text-gray-400"></i> সদস্যবৃন্দ</a>
-                <a href="#" onclick="navigateTo('branches'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-code-branch w-6 text-center text-primary dark:text-gray-400"></i> শাখাসমূহ</a>
                 <a href="#" onclick="navigateTo('books'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-book w-6 text-center text-primary dark:text-gray-400"></i> বইসমূহ</a>
-                <a href="#" onclick="navigateTo('activities'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-hands-helping w-6 text-center text-primary dark:text-gray-400"></i> কার্যক্রম</a>
-                <a href="#" onclick="navigateTo('events'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-calendar-alt w-6 text-center text-primary dark:text-gray-400"></i> ইভেন্ট</a>
-                <a href="#" onclick="navigateTo('notices'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-bullhorn w-6 text-center text-primary dark:text-gray-400"></i> নোটিশ বোর্ড</a>
                 <a href="#" onclick="navigateTo('donations'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-hand-holding-heart w-6 text-center text-primary dark:text-gray-400"></i> দান/অনুদান</a>
                 <div class="border-t border-bordercol dark:border-gray-700 my-2"></div>
-                <a href="#" onclick="navigateTo('join'); return false;" class="block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-textcol dark:text-gray-200 font-medium"><i class="fas fa-user-plus w-6 text-center text-muted"></i> সদস্য হোন</a>
+                <a href="#" onclick="navigateTo('admin'); return false;" class="admin-only hidden block p-3 rounded-lg bg-green-50 dark:bg-green-900/30 text-primary dark:text-green-400 font-bold mb-2 border border-green-200 dark:border-green-800"><i class="fas fa-user-shield w-6 text-center"></i> অ্যাডমিন প্যানেল</a>
                 <a href="#" id="mobile-logout-btn" onclick="window.handleLogout(); return false;" class="hidden p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-medium"><i class="fas fa-sign-out-alt w-6 text-center"></i> লগআউট</a>
             </div>
         </div>
@@ -176,7 +178,7 @@
     <div id="modals">
         <!-- Login Modal -->
         <div id="login-modal" class="hidden fixed inset-0 z-[70] modal-overlay items-center justify-center p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-[fadeIn_0.2s_ease-out]">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-bordercol dark:border-gray-700">
                 <div class="p-4 border-b border-bordercol dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
                     <h3 class="font-bold text-lg text-primary flex items-center space-x-2"><i class="fas fa-lock"></i> <span>লগইন করুন</span></h3>
                     <button onclick="closeModal('login-modal')" class="text-muted hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-times"></i></button>
@@ -190,109 +192,41 @@
                         <label class="block text-xs text-muted mb-1 font-semibold">পাসওয়ার্ড</label>
                         <input type="password" id="login-pass" required class="w-full p-3 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none focus:ring-2 focus:ring-primary transition">
                     </div>
-                    <button type="submit" id="login-submit-btn" class="w-full bg-primary hover:bg-darkgreen text-white font-bold py-3 rounded-lg shadow-md shadow-green-600/20 transition">লগইন</button>
-                    <div class="text-center mt-4">
-                        <a href="#" class="text-sm text-primary hover:underline">পাসওয়ার্ড ভুলে গেছেন?</a>
-                    </div>
+                    <button type="submit" id="login-submit-btn" class="w-full bg-primary hover:bg-darkgreen text-white font-bold py-3 rounded-lg shadow-md transition">লগইন</button>
+                    <div id="login-error" class="hidden text-xs text-red-500 font-bold text-center mt-2">লগইন ব্যর্থ হয়েছে। তথ্য যাচাই করুন।</div>
                 </form>
             </div>
         </div>
 
-        <!-- Create Post Modal -->
-        <div id="create-post-modal" class="hidden fixed inset-0 z-[70] modal-overlay items-center justify-center p-4 md:p-6">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
-                <div class="p-4 border-b border-bordercol dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
-                    <h3 class="font-bold text-lg text-primary">নতুন পোস্ট তৈরি করুন</h3>
-                    <button onclick="closeModal('create-post-modal')" class="text-muted hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-times"></i></button>
+        <!-- Generic Add/Edit Modal (Used heavily by Admin) -->
+        <div id="generic-modal" class="hidden fixed inset-0 z-[80] modal-overlay items-center justify-center p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col border border-bordercol dark:border-gray-700">
+                <div class="px-5 py-4 border-b border-bordercol dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900 rounded-t-2xl">
+                    <h3 id="generic-modal-title" class="font-bold text-lg text-primary flex items-center space-x-2"></h3>
+                    <button onclick="closeModal('generic-modal')" class="text-muted hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
                 </div>
-                <div class="p-4 md:p-5 flex-1 overflow-y-auto no-scrollbar">
-                    <form id="create-post-form" class="space-y-4">
-                        <select id="post-type" class="w-full p-3 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none">
-                            <option value="সাধারণ">সাধারণ পোস্ট</option>
-                            <option value="হাদিস">হাদিস/কুরআন</option>
-                            <option value="ইসলামিক প্রবন্ধ">ইসলামিক প্রবন্ধ</option>
-                            <option value="সাংগঠনিক কার্যক্রম">সাংগঠনিক কার্যক্রম</option>
-                            <option value="বই পরিচিতি">বই পরিচিতি</option>
-                        </select>
-                        <textarea id="post-text" required rows="5" placeholder="আপনার মনে কি আছে? এখানে লিখুন..." class="w-full p-3 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none resize-none focus:ring-2 focus:ring-primary"></textarea>
-                        <div class="grid grid-cols-2 gap-3">
-                            <input type="text" id="post-ref" placeholder="রেফারেন্স (যদি থাকে)" class="w-full p-2 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white text-sm outline-none">
-                            <input type="text" id="post-location" placeholder="লোকেশন" class="w-full p-2 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white text-sm outline-none">
-                        </div>
-                        <div class="border-2 border-dashed border-bordercol dark:border-gray-600 rounded-lg p-4 text-center bg-gray-50 dark:bg-gray-700">
-                            <label class="cursor-pointer flex flex-col items-center text-muted hover:text-primary transition">
-                                <i class="fas fa-cloud-upload-alt text-2xl mb-1"></i>
-                                <span class="text-sm font-semibold">ছবি বা ভিডিও আপলোড করুন</span>
-                                <input type="file" id="post-file" accept="image/*,video/*" class="hidden">
-                            </label>
-                            <p id="file-name-display" class="text-xs text-primary mt-2 hidden"></p>
-                        </div>
-                    </form>
-                </div>
-                <div class="p-4 border-t border-bordercol dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                    <button onclick="window.submitPost()" id="post-submit-btn" class="w-full bg-primary hover:bg-darkgreen text-white font-bold py-3 rounded-lg shadow-md transition">প্রকাশ করুন</button>
+                <div class="p-5 flex-1 overflow-y-auto no-scrollbar" id="generic-modal-body">
+                    <!-- Dynamic Form Injected Here -->
                 </div>
             </div>
         </div>
 
-        <!-- Comments Modal -->
-        <div id="comments-modal" class="hidden fixed inset-0 z-[70] modal-overlay items-end md:items-center justify-center p-0 md:p-4">
-            <div class="bg-white dark:bg-gray-800 rounded-t-2xl md:rounded-2xl shadow-2xl w-full max-w-lg h-[80vh] md:h-[600px] flex flex-col transform transition-transform animate-[slideUp_0.3s_ease-out]">
-                <div class="p-4 border-b border-bordercol dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
-                    <h3 class="font-bold text-lg text-primary flex items-center space-x-2"><i class="fas fa-comments"></i> <span>মন্তব্যসমূহ</span></h3>
-                    <button onclick="closeModal('comments-modal')" class="text-muted hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="p-3 bg-green-50 dark:bg-gray-700/50 border-b border-bordercol dark:border-gray-700">
-                    <p id="comment-post-text" class="text-xs text-muted italic line-clamp-2"></p>
-                </div>
-                <div id="comments-list" class="flex-1 overflow-y-auto p-4 space-y-3 bg-bgcol dark:bg-gray-800/50">
-                    <!-- Comments injected here -->
-                </div>
-                <div class="p-4 border-t border-bordercol dark:border-gray-700 bg-white dark:bg-gray-900">
-                    <div id="visitor-comment-fields" class="mb-3 space-y-2 hidden">
-                        <p class="text-xs text-red-500 font-semibold mb-1"><i class="fas fa-info-circle"></i> আপনি লগইন করা নেই। তথ্য দিন:</p>
-                        <input type="text" id="comment-name" placeholder="আপনার নাম*" class="w-full p-2 text-sm border border-bordercol dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none">
-                        <div class="flex space-x-2">
-                            <input type="text" id="comment-phone" placeholder="মোবাইল নং" class="w-1/2 p-2 text-sm border border-bordercol dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none">
-                            <input type="text" id="comment-address" placeholder="ঠিকানা" class="w-1/2 p-2 text-sm border border-bordercol dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none">
-                        </div>
-                    </div>
-                    <div class="flex items-end space-x-2">
-                        <textarea id="comment-text" rows="1" placeholder="আপনার মন্তব্য লিখুন..." class="flex-1 p-3 border border-bordercol dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-700 dark:text-white outline-none resize-none max-h-24 no-scrollbar"></textarea>
-                        <button onclick="window.submitComment()" class="bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center hover:bg-darkgreen transition flex-shrink-0 shadow-md"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
+        <!-- Action Loader & Toast -->
+        <div id="action-loader" class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center backdrop-blur-sm">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl flex flex-col items-center">
+                <div class="loader-spinner mb-3"></div>
+                <p id="action-loader-text" class="text-sm font-bold text-textcol dark:text-white">প্রসেসিং হচ্ছে...</p>
             </div>
         </div>
-
-        <!-- Private Chat Modal -->
-        <div id="chat-modal" class="hidden fixed inset-0 z-[70] bg-white dark:bg-gray-900 flex-col animate-[fadeIn_0.2s_ease-out]">
-            <div class="h-14 bg-primary text-white flex items-center px-4 shadow-md flex-shrink-0">
-                <button onclick="closeModal('chat-modal')" class="w-8 h-8 flex items-center justify-center mr-2"><i class="fas fa-arrow-left"></i></button>
-                <div class="flex-1 flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"><i class="fas fa-user text-white"></i></div>
-                    <div>
-                        <h3 id="chat-modal-title" class="font-bold leading-none">সদস্য</h3>
-                        <span class="text-[10px] text-green-200">Online</span>
-                    </div>
-                </div>
-            </div>
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-bgcol dark:bg-gray-800">
-                <!-- Messages -->
-            </div>
-            <div class="p-3 border-t border-bordercol dark:border-gray-700 bg-white dark:bg-gray-900 flex items-center space-x-2 flex-shrink-0">
-                <button class="text-muted w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-full"><i class="fas fa-image"></i></button>
-                <input type="text" id="chat-input" placeholder="মেসেজ লিখুন..." class="flex-1 p-3 rounded-full bg-gray-100 dark:bg-gray-800 border-none outline-none dark:text-white" onkeyup="if(event.key === 'Enter') window.sendChatMessage()">
-                <button onclick="window.sendChatMessage()" class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-md"><i class="fas fa-paper-plane"></i></button>
-            </div>
+        
+        <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-[110] bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 pointer-events-none">
+            <i id="toast-icon" class="fas fa-check-circle text-green-400"></i>
+            <span id="toast-msg" class="text-sm font-medium"></span>
         </div>
-
     </div>
 
-    <!-- Initialization / Animations CSS -->
+    <!-- UI Animations -->
     <style>
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
@@ -302,7 +236,7 @@
         // 1. Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getDatabase, ref, onValue, set, push, serverTimestamp, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, onValue, set, push, remove, serverTimestamp, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
         import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
         // 2. Firebase Configuration
@@ -321,92 +255,144 @@
         const db = getDatabase(app);
         const storage = getStorage(app);
 
-        // Global assignments for inline handlers
-        window.db = db;
-        window.auth = auth;
-        window.storage = storage;
-        window.currentUser = null;
-        window.currentUserProfile = null;
+        // Global State
+        window.db = db; window.auth = auth; window.storage = storage;
+        window.currentUser = null; window.currentUserProfile = null; window.isAdmin = false;
         window.currentView = 'home';
-        window.currentPostIdForComment = null;
+        const defaultAvatar = `<svg class="w-full h-full text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 
-        // Utility: SVG Default Avatar
-        const defaultAvatarSVG = `<svg class="w-full h-full text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
-
-        // Utilities
+        // UI Utilities
+        const qs = s => document.querySelector(s);
         window.openModal = id => { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         window.closeModal = id => { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
         const escapeHtml = str => (str||'').toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        const getSkeleton = (count=1) => Array(count).fill(`<div class="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 skeleton mb-4"><div class="flex items-center space-x-3 mb-3"><div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div><div class="flex-1 space-y-2"><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div><div class="h-2 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div></div></div><div class="space-y-2"><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div></div></div>`).join('');
-        const emptyState = msg => `<div class="p-10 flex flex-col items-center justify-center text-center text-muted bg-white dark:bg-gray-800 rounded-xl border border-bordercol dark:border-gray-700 shadow-sm col-span-full"><i class="fas fa-folder-open text-4xl mb-3 text-gray-300 dark:text-gray-600"></i><p class="text-sm md:text-base">${msg}</p></div>`;
+        const formatMoney = amt => '৳ ' + parseFloat(amt||0).toLocaleString('bn-BD');
+        const formatDate = ms => ms ? new Date(ms).toLocaleDateString('bn-BD', {year:'numeric', month:'short', day:'numeric'}) : '-';
+        
+        window.showToast = (msg, type='success') => {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            document.getElementById('toast-icon').className = type === 'success' ? 'fas fa-check-circle text-green-400' : 'fas fa-exclamation-circle text-red-400';
+            t.classList.remove('translate-y-20', 'opacity-0'); setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
+        };
+        const showLoader = (text='প্রসেসিং হচ্ছে...') => { document.getElementById('action-loader-text').innerText = text; window.openModal('action-loader'); };
+        const hideLoader = () => window.closeModal('action-loader');
+        
+        const getSkeleton = (c=1) => Array(c).fill(`<div class="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 skeleton mb-4"><div class="flex space-x-3 mb-3"><div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div><div class="flex-1 space-y-2"><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div><div class="h-2 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div></div></div><div class="space-y-2"><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div></div></div>`).join('');
+        const emptyState = msg => `<div class="p-10 flex flex-col items-center justify-center text-center text-muted bg-white dark:bg-gray-800 rounded-xl border border-bordercol dark:border-gray-700 shadow-sm col-span-full"><i class="fas fa-folder-open text-4xl mb-3 text-gray-300 dark:text-gray-600"></i><p>${msg}</p></div>`;
 
-        // UI Initialization
-        function initTheme() {
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else { document.documentElement.classList.remove('dark'); }
-        }
-        window.toggleDarkMode = function() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark');
-            }
-        }
-        initTheme();
+        // Theme
+        window.toggleDarkMode = () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); }
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
 
-        // 3. Authentication Handlers
+        // General Confirm Action
+        window.confirmAction = (msg, callback) => {
+            if(confirm(msg)) callback();
+        };
+
+        // Generic Delete (Admin Tool)
+        window.deleteData = async (path, id) => {
+            if(!window.isAdmin) return;
+            window.confirmAction('আপনি কি সত্যিই এটি মুছে ফেলতে চান?', async () => {
+                showLoader('মুছে ফেলা হচ্ছে...');
+                try { await remove(ref(db, `${path}/${id}`)); window.showToast('সফলভাবে মুছে ফেলা হয়েছে'); } 
+                catch(e) { alert(e.message); }
+                hideLoader();
+            });
+        };
+
+        // Generic Modal Form Builder (For Admin Additions)
+        window.openGenericForm = (title, icon, fields, dbPath, callbackPrep) => {
+            if(!window.isAdmin) return;
+            let formHTML = `<form id="gen-form" class="space-y-4">`;
+            fields.forEach(f => {
+                if(f.type==='textarea') formHTML += `<div><label class="block text-xs font-bold text-muted mb-1">${f.label}</label><textarea id="gf_${f.key}" required rows="3" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></textarea></div>`;
+                else if(f.type==='file') formHTML += `<div><label class="block text-xs font-bold text-muted mb-1">${f.label}</label><input type="file" id="gf_${f.key}" accept="image/*" class="w-full text-sm text-muted file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-50 file:text-primary dark:file:bg-gray-600 dark:file:text-white outline-none"></div>`;
+                else formHTML += `<div><label class="block text-xs font-bold text-muted mb-1">${f.label}</label><input type="${f.type||'text'}" id="gf_${f.key}" required class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>`;
+            });
+            formHTML += `<button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg mt-4 shadow-md">সংরক্ষণ করুন</button></form>`;
+            
+            document.getElementById('generic-modal-title').innerHTML = `<i class="${icon}"></i> <span>${title}</span>`;
+            document.getElementById('generic-modal-body').innerHTML = formHTML;
+            window.openModal('generic-modal');
+
+            document.getElementById('gen-form').onsubmit = async e => {
+                e.preventDefault(); showLoader('সংরক্ষণ করা হচ্ছে...');
+                try {
+                    let data = { timestamp: serverTimestamp() };
+                    for (let f of fields) {
+                        if(f.type === 'file') {
+                            const file = document.getElementById(`gf_${f.key}`).files[0];
+                            if(file) {
+                                const snap = await uploadBytesResumable(sRef(storage, `${dbPath}/${Date.now()}_${file.name}`), file);
+                                data[f.key] = await getDownloadURL(snap.ref);
+                            }
+                        } else {
+                            data[f.key] = document.getElementById(`gf_${f.key}`).value;
+                            if(f.type === 'number') data[f.key] = parseFloat(data[f.key]||0);
+                        }
+                    }
+                    if(callbackPrep) data = callbackPrep(data); // Custom modifications before save
+                    await push(ref(db, dbPath), data);
+                    window.closeModal('generic-modal'); window.showToast('সফলভাবে যুক্ত হয়েছে');
+                } catch(err) { alert(err.message); }
+                hideLoader();
+            };
+        };
+
+        // Auth Listeners & Admin Check
         window.handleLogin = async e => {
-            e.preventDefault();
-            const btn = document.getElementById('login-submit-btn'); btn.innerText = "লগইন হচ্ছে..."; btn.disabled = true;
-            try {
-                await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value);
-                closeModal('login-modal'); document.getElementById('login-form').reset();
-            } catch(err) { alert("লগইন ব্যর্থ হয়েছে। সঠিক তথ্য দিন।"); }
-            btn.innerText = "লগইন"; btn.disabled = false;
+            e.preventDefault(); const btn=qs('#login-submit-btn'); btn.innerText="লগইন হচ্ছে..."; btn.disabled=true; hide('login-error');
+            try { await signInWithEmailAndPassword(auth, qs('#login-email').value, qs('#login-pass').value); closeModal('login-modal'); qs('#login-form').reset(); } 
+            catch(err) { show('login-error'); }
+            finally { btn.innerText="লগইন"; btn.disabled=false; }
         }
         window.handleLogout = () => { signOut(auth); document.getElementById('mobile-menu').classList.add('hidden'); }
-        
+
         onAuthStateChanged(auth, user => {
             const userBtn = document.getElementById('header-user-btn');
             if(user) {
                 window.currentUser = user;
-                document.getElementById('mobile-logout-btn').classList.remove('hidden');
-                onValue(ref(db, `users/${user.uid}`), snap => {
-                    window.currentUserProfile = snap.val() || {};
-                    userBtn.innerHTML = window.currentUserProfile.photoURL ? `<img src="${window.currentUserProfile.photoURL}" class="w-full h-full object-cover">` : defaultAvatarSVG;
-                    userBtn.onclick = () => window.navigateTo('profile');
+                qs('#mobile-logout-btn').classList.remove('hidden');
+                
+                // Fetch Profile & Admin Status
+                get(ref(db, `users/${user.uid}`)).then(snap => {
+                    window.currentUserProfile = snap.val() || { name: user.displayName||'User' };
+                    userBtn.innerHTML = window.currentUserProfile.photoURL ? `<img src="${window.currentUserProfile.photoURL}" class="w-full h-full object-cover">` : defaultAvatar;
+                });
+
+                // Check Admin
+                get(ref(db, `admins/${user.uid}`)).then(snap => {
+                    if(snap.exists() && snap.val() === true) {
+                        window.isAdmin = true;
+                        document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+                    } else {
+                        window.isAdmin = false;
+                        document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+                        if(window.currentView === 'admin') window.navigateTo('home');
+                    }
                     if(window.currentView === 'home' || window.currentView === 'profile') window.navigateTo(window.currentView);
                 });
-                listenNotifications();
             } else {
-                window.currentUser = null; window.currentUserProfile = null;
-                document.getElementById('mobile-logout-btn').classList.add('hidden');
+                window.currentUser = null; window.currentUserProfile = null; window.isAdmin = false;
+                qs('#mobile-logout-btn').classList.add('hidden');
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
                 userBtn.innerHTML = `<i class="fas fa-user"></i>`;
-                userBtn.onclick = () => openModal('login-modal');
-                document.querySelectorAll('.notif-badge').forEach(b => b.style.display = 'none');
-                if(window.currentView === 'profile') window.navigateTo('home');
-                else window.navigateTo(window.currentView);
+                if(['profile','admin'].includes(window.currentView)) window.navigateTo('home'); else window.navigateTo(window.currentView);
             }
         });
 
-        // 4. Notifications
-        function listenNotifications() {
-            if(!window.currentUser) return;
-            onValue(ref(db, `notifications/${window.currentUser.uid}`), snap => {
-                let unread = 0;
-                if(snap.exists()) { snap.forEach(c => { if(!c.val().read) unread++; }); }
-                document.querySelectorAll('.notif-badge').forEach(b => { b.innerText = unread; b.style.display = unread > 0 ? 'flex' : 'none'; });
-            });
-        }
+        // Navigation Engine
+        window.activeListeners = [];
+        const clearListeners = () => { window.activeListeners.forEach(u => u()); window.activeListeners = []; };
+        const addListener = (path, cb) => { const u = onValue(ref(db, path), cb); window.activeListeners.push(() => u()); };
 
-        // 5. Navigation Logic
         window.navigateTo = pageId => {
-            window.currentView = pageId;
-            document.getElementById('main-content').scrollTop = 0;
-            document.querySelectorAll('.nav-link').forEach(link => { link.classList.remove('text-primary', 'font-bold', 'bg-green-50', 'dark:bg-gray-700'); });
-            document.querySelectorAll(`.nav-${pageId}`).forEach(link => { link.classList.add('text-primary', 'font-bold', 'bg-green-50', 'dark:bg-gray-700'); });
-            document.getElementById('mobile-menu').classList.add('hidden');
+            clearListeners(); window.currentView = pageId;
+            qs('#main-content').scrollTop = 0;
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-primary', 'font-bold', 'bg-green-50', 'dark:bg-gray-700', 'border', 'border-green-200'));
+            document.querySelectorAll(`.nav-${pageId}`).forEach(l => { if(!l.classList.contains('admin-only')||window.isAdmin) l.classList.add('text-primary', 'font-bold', 'bg-green-50', 'dark:bg-gray-700'); });
+            qs('#mobile-menu').classList.add('hidden');
             
             const main = document.getElementById('main-content');
             main.innerHTML = getSkeleton(2);
@@ -415,303 +401,279 @@
                 case 'home': renderHome(main); break;
                 case 'search': renderSearch(main); break;
                 case 'members': renderMembers(main); break;
-                case 'branches': renderBranches(main); break;
                 case 'books': renderBooks(main); break;
-                case 'activities': renderActivities(main); break;
-                case 'events': renderEvents(main); break;
-                case 'messages': renderMessagesList(main); break;
+                case 'notices': renderNotices(main); break;
                 case 'donations': renderDonations(main); break;
-                case 'notices': renderNoticesPage(main); break;
-                case 'profile': renderProfilePage(main); break;
-                case 'join': renderJoinForm(main); break;
+                case 'profile': renderProfile(main); break;
+                case 'admin': if(window.isAdmin) renderAdminDashboard(main); else window.navigateTo('home'); break;
                 default: renderHome(main);
             }
         }
 
-        // Component: Post Card
+        // --- VIEWS RENDERING ---
+
         function createPostCard(post) {
             const time = post.timestamp ? new Date(post.timestamp).toLocaleString('bn-BD', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : '';
             let mediaHtml = '';
-            if (post.mediaUrl) {
-                if(post.mediaType === 'video') mediaHtml = `<video src="${post.mediaUrl}" controls class="w-full mt-3 rounded-lg border border-bordercol dark:border-gray-700 bg-black"></video>`;
-                else mediaHtml = `<img src="${post.mediaUrl}" class="w-full mt-3 rounded-lg object-cover max-h-[500px] border border-bordercol dark:border-gray-700" alt="Post">`;
-            }
+            if (post.mediaUrl) mediaHtml = post.mediaType === 'video' ? `<video src="${post.mediaUrl}" controls class="w-full mt-3 rounded-lg border border-bordercol bg-black"></video>` : `<img src="${post.mediaUrl}" class="w-full mt-3 rounded-lg object-cover max-h-[500px] border border-bordercol">`;
+            
+            // Admin Controls for Feed
+            const adminControls = window.isAdmin ? `<button onclick="window.deleteData('posts', '${post.id}')" class="text-red-500 hover:bg-red-50 w-8 h-8 rounded-full flex items-center justify-center transition" title="Delete Post"><i class="fas fa-trash-alt text-xs"></i></button>` : '';
+
             return `
-            <div class="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 mb-4 transform transition hover:shadow-md">
-                <div class="flex items-center justify-between mb-3">
+            <div class="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 mb-4 group relative">
+                <div class="flex items-start justify-between mb-3">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-bordercol">
-                            ${post.authorImg ? `<img src="${post.authorImg}" class="w-full h-full object-cover">` : defaultAvatarSVG}
-                        </div>
+                        <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-200 border border-bordercol flex-shrink-0">${post.authorImg ? `<img src="${post.authorImg}" class="w-full h-full object-cover">` : defaultAvatar}</div>
                         <div>
-                            <h4 class="font-bold text-textcol dark:text-gray-100 leading-tight">${escapeHtml(post.authorName || 'অজানা সদস্য')}</h4>
-                            <div class="text-[11px] md:text-xs text-muted flex items-center mt-0.5">
-                                <span>${escapeHtml(post.authorRole || 'সদস্য')}</span><span class="mx-1">•</span><span>${escapeHtml(post.branch || '')}</span><span class="mx-1">•</span><span>${time}</span>
-                            </div>
+                            <h4 class="font-bold text-textcol dark:text-white leading-tight">${escapeHtml(post.authorName || 'সদস্য')}</h4>
+                            <p class="text-[11px] text-muted">${escapeHtml(post.authorRole||'')} • ${time}</p>
                         </div>
                     </div>
+                    <div class="flex space-x-2">${adminControls}</div>
                 </div>
-                ${post.postType ? `<div class="inline-block px-2 py-0.5 bg-green-50 dark:bg-green-900/30 text-primary dark:text-green-400 text-[10px] font-bold rounded mb-2 border border-green-100 dark:border-green-800">${escapeHtml(post.postType)}</div>` : ''}
-                <p class="text-textcol dark:text-gray-200 whitespace-pre-wrap text-sm md:text-base leading-relaxed">${escapeHtml(post.text || '')}</p>
-                ${post.hadithRef ? `<p class="text-xs text-muted mt-2 border-l-2 border-gold pl-2 bg-gray-50 dark:bg-gray-900 p-2 rounded-r italic">রেফারেন্স: ${escapeHtml(post.hadithRef)}</p>` : ''}
+                ${post.postType ? `<span class="inline-block px-2 py-0.5 bg-green-50 dark:bg-green-900/30 text-primary dark:text-green-400 text-[10px] font-bold rounded mb-2 border border-green-100 dark:border-green-800">${escapeHtml(post.postType)}</span>` : ''}
+                <p class="text-textcol dark:text-gray-200 whitespace-pre-wrap text-sm leading-relaxed">${escapeHtml(post.text || '')}</p>
                 ${mediaHtml}
-                <div class="mt-4 pt-2 border-t border-bordercol dark:border-gray-700 flex justify-between text-muted text-sm font-semibold">
-                    <button onclick="window.toggleLike('${post.id}')" class="flex-1 flex items-center justify-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 rounded-lg transition ${post.isLiked?'text-primary':''}">
-                        <i class="${post.isLiked?'fas':'far'} fa-thumbs-up"></i> <span>${post.likesCount || 0}</span>
-                    </button>
-                    <button onclick="window.openComments('${post.id}')" class="flex-1 flex items-center justify-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 rounded-lg transition">
-                        <i class="far fa-comment"></i> <span>${post.commentsCount || 0}</span>
-                    </button>
-                    <button class="flex-1 flex items-center justify-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 rounded-lg transition">
-                        <i class="fas fa-share"></i>
-                    </button>
-                </div>
             </div>`;
         }
 
-        // Render Functions
         function renderHome(main) {
             main.innerHTML = `<div class="max-w-2xl mx-auto w-full">
                 ${window.currentUser ? `
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 mb-6 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition" onclick="openCreatePostModal()">
-                    <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border border-bordercol flex items-center justify-center">${window.currentUserProfile?.photoURL ? `<img src="${window.currentUserProfile.photoURL}" class="w-full h-full object-cover">` : defaultAvatarSVG}</div>
-                    <div class="flex-1 bg-gray-100 dark:bg-gray-900 rounded-full py-2.5 px-4 text-muted text-sm border border-bordercol dark:border-gray-700">নতুন পোস্ট লিখুন...</div>
-                    <i class="fas fa-images text-green-500 text-xl"></i>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 mb-6 flex items-center space-x-3 cursor-pointer" onclick="window.openGenericForm('নতুন পোস্ট', 'fas fa-pen', [{key:'text', label:'পোস্ট লিখুন', type:'textarea'}, {key:'mediaUrl', label:'ছবি (ঐচ্ছিক)', type:'file'}], 'posts', d=>{ d.authorName=window.currentUserProfile?.name||'সদস্য'; d.authorImg=window.currentUserProfile?.photoURL||''; d.userId=window.currentUser.uid; return d; })">
+                    <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden border border-bordercol flex-shrink-0">${window.currentUserProfile?.photoURL ? `<img src="${window.currentUserProfile.photoURL}" class="w-full h-full object-cover">` : defaultAvatar}</div>
+                    <div class="flex-1 bg-gray-100 dark:bg-gray-900 rounded-full py-2.5 px-4 text-muted text-sm border border-bordercol">আপনার মনে কি আছে?</div>
+                    <i class="fas fa-image text-green-500 text-xl"></i>
                 </div>` : ''}
-                <div id="feed-posts" class="space-y-0">${getSkeleton(3)}</div>
+                <div id="feed-posts">${getSkeleton(3)}</div>
             </div>`;
             
-            onValue(ref(db, 'posts'), snap => {
+            addListener('posts', snap => {
                 const feed = document.getElementById('feed-posts'); if(!feed) return;
                 if (!snap.exists()) { feed.innerHTML = emptyState("এখনও কোনো পোস্ট প্রকাশ করা হয়নি।"); return; }
-                const posts = [];
-                snap.forEach(c => { posts.push({id: c.key, ...c.val()}); });
+                const posts = []; snap.forEach(c => posts.push({id: c.key, ...c.val()}));
                 posts.sort((a,b) => b.timestamp - a.timestamp);
-                
-                if(window.currentUser) {
-                    const uid = window.currentUser.uid;
-                    let checkCount = posts.length;
-                    if(checkCount === 0) feed.innerHTML = '';
-                    posts.forEach(post => {
-                        get(ref(db, `likes/${post.id}/${uid}`)).then(lSnap => {
-                            post.isLiked = lSnap.exists();
-                            checkCount--;
-                            if(checkCount === 0) feed.innerHTML = posts.map(p => createPostCard(p)).join('');
-                        });
-                    });
-                } else {
-                    feed.innerHTML = posts.map(p => createPostCard(p)).join('');
-                }
+                feed.innerHTML = posts.map(p => createPostCard(p)).join('');
             });
         }
 
         function renderBooks(main) {
-            main.innerHTML = `<div class="max-w-6xl mx-auto"><h2 class="text-xl md:text-2xl font-bold mb-6 text-primary flex items-center space-x-2"><i class="fas fa-book-open"></i><span>বিতরণকৃত বইসমূহ</span></h2>
+            const adminBtn = window.isAdmin ? `<button onclick="window.openGenericForm('নতুন বই যুক্ত করুন', 'fas fa-book', [{key:'name',label:'বইয়ের নাম'},{key:'author',label:'লেখক'},{key:'publisher',label:'প্রকাশনী'},{key:'distributedArea',label:'বিতরণের এলাকা'},{key:'copiesCount',label:'বিতরণকৃত কপি সংখ্যা',type:'number'},{key:'imageUrl',label:'বইয়ের ছবি',type:'file'}], 'books')" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow hover:bg-darkgreen transition"><i class="fas fa-plus"></i> বই যোগ করুন</button>` : '';
+            
+            main.innerHTML = `<div class="max-w-6xl mx-auto"><div class="flex justify-between items-center mb-6"><h2 class="text-xl md:text-2xl font-bold text-primary flex items-center space-x-2"><i class="fas fa-book-open"></i><span>বিতরণকৃত বইসমূহ</span></h2>${adminBtn}</div>
             <div id="books-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">${getSkeleton(4)}</div></div>`;
             
-            onValue(ref(db, 'books'), snap => {
+            addListener('books', snap => {
                 const container = document.getElementById('books-list'); if(!container) return;
                 if(!snap.exists()){ container.innerHTML = emptyState("এখনও কোনো বইয়ের তথ্য প্রকাশ করা হয়নি।"); return; }
                 let html = '';
                 snap.forEach(child => {
                     const b = child.val();
+                    const delBtn = window.isAdmin ? `<button onclick="window.deleteData('books','${child.key}')" class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-red-600"><i class="fas fa-trash-alt text-xs"></i></button>` : '';
                     html += `
-                    <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-bordercol dark:border-gray-700 flex flex-col hover:shadow-md transition">
-                        <div class="h-48 bg-gray-100 dark:bg-gray-900 flex items-center justify-center overflow-hidden relative border-b border-bordercol dark:border-gray-700">
-                            ${b.imageUrl ? `<img src="${b.imageUrl}" class="w-full h-full object-contain p-2">` : `<i class="fas fa-book text-5xl text-gray-300 dark:text-gray-600"></i>`}
-                            <div class="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 text-xs font-bold rounded shadow shadow-black/50"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(b.distributedArea||'')}</div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-bordercol relative group">
+                        ${delBtn}
+                        <div class="h-48 bg-gray-100 dark:bg-gray-900 flex items-center justify-center overflow-hidden border-b border-bordercol relative">
+                            ${b.imageUrl ? `<img src="${b.imageUrl}" class="w-full h-full object-contain p-2">` : `<i class="fas fa-book text-5xl text-gray-300"></i>`}
+                            <div class="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 text-xs font-bold rounded shadow"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(b.distributedArea||'')}</div>
                         </div>
-                        <div class="p-4 flex-1 flex flex-col">
-                            <h3 class="font-bold text-lg text-textcol dark:text-white leading-tight mb-1">${escapeHtml(b.name)}</h3>
-                            <p class="text-xs text-muted font-semibold mb-2">লেখক: <span class="text-textcol dark:text-gray-300">${escapeHtml(b.author)}</span> | প্রকাশনী: <span class="text-textcol dark:text-gray-300">${escapeHtml(b.publisher)}</span></p>
-                            <p class="text-sm text-textcol dark:text-gray-400 flex-1 line-clamp-2">${escapeHtml(b.description || '')}</p>
-                            <div class="mt-4 pt-3 border-t border-bordercol dark:border-gray-700 text-xs text-muted flex justify-between items-center">
-                                <span><i class="far fa-calendar-alt"></i> ${b.distributedDate ? new Date(b.distributedDate).toLocaleDateString('bn-BD') : ''}</span>
-                                <span class="font-bold text-primary bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">পরিমাণ: ${b.copiesCount} টি</span>
+                        <div class="p-4 flex flex-col">
+                            <h3 class="font-bold text-lg dark:text-white leading-tight mb-1">${escapeHtml(b.name)}</h3>
+                            <p class="text-xs text-muted mb-3">লেখক: <span class="font-semibold text-textcol dark:text-gray-300">${escapeHtml(b.author)}</span> | প্রকাশনী: <span class="font-semibold text-textcol dark:text-gray-300">${escapeHtml(b.publisher)}</span></p>
+                            <div class="pt-3 border-t border-bordercol flex justify-between items-center text-xs">
+                                <span class="text-muted"><i class="far fa-calendar-alt"></i> ${formatDate(b.timestamp)}</span>
+                                <span class="font-bold text-primary bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">বিতরণ: ${b.copiesCount||0} টি</span>
                             </div>
                         </div>
                     </div>`;
                 });
                 container.innerHTML = html;
+            });
+        }
+
+        function renderNotices(main) {
+            const adminBtn = window.isAdmin ? `<button onclick="window.openGenericForm('নতুন নোটিশ/ইভেন্ট', 'fas fa-bullhorn', [{key:'title',label:'শিরোনাম'},{key:'description',label:'বিস্তারিত বিবরণ',type:'textarea'},{key:'priority',label:'অগ্রাধিকার (High/Normal)'}], 'notices')" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow hover:bg-darkgreen transition"><i class="fas fa-plus"></i> যোগ করুন</button>` : '';
+            
+            main.innerHTML = `<div class="max-w-4xl mx-auto"><div class="flex justify-between items-center mb-6"><h2 class="text-xl md:text-2xl font-bold text-primary flex items-center space-x-2"><i class="fas fa-bullhorn"></i><span>নোটিশ বোর্ড</span></h2>${adminBtn}</div>
+            <div id="notices-list" class="space-y-4">${getSkeleton(3)}</div></div>`;
+            
+            addListener('notices', snap => {
+                const container = document.getElementById('notices-list'); if(!container) return;
+                if(!snap.exists()){ container.innerHTML = emptyState("বোর্ডে কোনো নতুন নোটিশ নেই।"); return; }
+                const items = []; snap.forEach(c => items.push({id: c.key, ...c.val()}));
+                items.sort((a,b) => b.timestamp - a.timestamp);
+                
+                container.innerHTML = items.map(n => {
+                    const isHigh = n.priority && n.priority.toLowerCase() === 'high';
+                    const bgClass = isHigh ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/50' : 'bg-white dark:bg-gray-800 border-bordercol';
+                    const iconClass = isHigh ? 'text-red-500 fa-exclamation-triangle' : 'text-primary fa-info-circle';
+                    const delBtn = window.isAdmin ? `<button onclick="window.deleteData('notices','${n.id}')" class="text-red-500 hover:bg-red-100 p-2 rounded-full"><i class="fas fa-trash-alt"></i></button>` : '';
+                    return `
+                    <div class="${bgClass} p-5 rounded-xl shadow-sm border relative flex items-start space-x-4">
+                        <div class="text-2xl ${iconClass.split(' ')[0]} mt-1"><i class="fas ${iconClass.split(' ')[1]}"></i></div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-bold text-lg dark:text-white">${escapeHtml(n.title)}</h3>
+                                ${delBtn}
+                            </div>
+                            <p class="text-[10px] text-muted font-bold tracking-wider uppercase mb-2">${formatDate(n.timestamp)}</p>
+                            <p class="text-sm dark:text-gray-300 whitespace-pre-wrap">${escapeHtml(n.description)}</p>
+                        </div>
+                    </div>`;
+                }).join('');
             });
         }
 
         function renderMembers(main) {
             main.innerHTML = `<div class="max-w-6xl mx-auto"><h2 class="text-xl md:text-2xl font-bold mb-6 text-primary flex items-center space-x-2"><i class="fas fa-users"></i><span>সদস্যবৃন্দ</span></h2>
             <div id="members-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">${getSkeleton(6)}</div></div>`;
-            onValue(ref(db, 'members'), snap => {
+            addListener('members', snap => {
                 const container = document.getElementById('members-list'); if(!container) return;
                 if(!snap.exists()){ container.innerHTML = emptyState("কোনো সদস্যের তথ্য পাওয়া যায়নি।"); return; }
                 let html = '';
-                snap.forEach(child => {
-                    const m = child.val();
+                snap.forEach(c => {
+                    const m = c.val();
                     html += `
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol dark:border-gray-700 flex items-center space-x-4 shadow-sm">
-                        <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0 border-2 border-bordercol">
-                            ${m.photoURL ? `<img src="${m.photoURL}" class="w-full h-full object-cover">` : defaultAvatarSVG}
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol flex items-center space-x-4 shadow-sm">
+                        <div class="w-14 h-14 rounded-full overflow-hidden bg-gray-200 border-2 border-bordercol flex-shrink-0">${m.photoURL ? `<img src="${m.photoURL}" class="w-full h-full object-cover">` : defaultAvatar}</div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold dark:text-white truncate text-base">${escapeHtml(m.name)}</h4>
+                            <p class="text-xs text-primary dark:text-green-400 font-semibold mb-0.5">${escapeHtml(m.role || 'সদস্য')}</p>
+                            <p class="text-[10px] text-muted truncate"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.branch || 'শাখা নেই')}</p>
                         </div>
-                        <div class="flex-1 overflow-hidden">
-                            <h4 class="font-bold text-textcol dark:text-white truncate text-base">${escapeHtml(m.name)}</h4>
-                            <p class="text-xs text-primary dark:text-green-400 font-semibold mb-1">${escapeHtml(m.role || 'সদস্য')}</p>
-                            <p class="text-[11px] text-muted truncate"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.branch || 'শাখা নেই')}</p>
-                        </div>
-                        <button onclick="window.openChat('${child.key}', '${escapeHtml(m.name)}')" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-primary hover:text-white dark:bg-gray-700 dark:hover:bg-primary transition flex items-center justify-center text-muted flex-shrink-0 shadow-sm">
-                            <i class="fas fa-comment-dots"></i>
-                        </button>
                     </div>`;
                 });
                 container.innerHTML = html;
             });
         }
 
-        // Placeholder renders for missing generic views
-        function renderBranches(main) { main.innerHTML = emptyState("শাখাসমূহের তথ্য পাওয়া যায়নি।"); }
-        function renderActivities(main) { main.innerHTML = emptyState("কোনো কার্যক্রমের তথ্য পাওয়া যায়নি।"); }
-        function renderEvents(main) { main.innerHTML = emptyState("কোনো ইভেন্টের তথ্য পাওয়া যায়নি।"); }
-        function renderNoticesPage(main) { main.innerHTML = emptyState("কোনো নোটিশ পাওয়া যায়নি।"); }
-        function renderMessagesList(main) { main.innerHTML = window.currentUser ? emptyState("আপনার কোনো মেসেজ নেই। সদস্যদের প্রোফাইল থেকে মেসেজ করুন।") : emptyState("মেসেজ দেখতে লগইন করুন।"); }
-        function renderDonations(main) { main.innerHTML = emptyState("ডোনেশন পদ্ধতি লোড হচ্ছে..."); onValue(ref(db,'settings/donations'), snap => { if(!snap.exists()) main.innerHTML=emptyState("কোনো ডোনেশন নম্বর যুক্ত করা হয়নি।"); else main.innerHTML="<p class='p-4 text-center'>ডেভেলপার মোডে আংশিক রেন্ডার।</p>"; });}
-        
-        function renderSearch(main) {
-            main.innerHTML = `<div class="max-w-2xl mx-auto"><div class="bg-white dark:bg-gray-800 p-2 md:p-3 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 flex mb-6"><input type="text" id="search-input" placeholder="খুঁজুন (সদস্য, পোস্ট, বই...)" class="flex-1 bg-transparent outline-none dark:text-white px-3"><button onclick="window.performSearch()" class="bg-primary text-white w-10 h-10 rounded-lg flex items-center justify-center"><i class="fas fa-search"></i></button></div><div id="search-results" class="space-y-3"><div class="text-center text-muted mt-10"><i class="fas fa-search text-3xl mb-2 text-gray-300"></i><p>কিছু খুঁজতে উপরে টাইপ করুন...</p></div></div></div>`;
-        }
-        window.performSearch = () => {
-            const q = document.getElementById('search-input').value.toLowerCase();
-            const res = document.getElementById('search-results');
-            if(!q) return; res.innerHTML = getSkeleton(2);
-            Promise.all([get(ref(db,'posts')), get(ref(db,'books'))]).then(([pSnap, bSnap]) => {
-                let html = '', c = 0;
-                if(pSnap.exists()){ pSnap.forEach(ch=>{ const v=ch.val(); if((v.text&&v.text.toLowerCase().includes(q))||(v.authorName&&v.authorName.toLowerCase().includes(q))){ html+=`<div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-bordercol shadow-sm mb-3"><span class="text-[10px] bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-primary font-bold mb-2 inline-block">পোস্ট</span><p class="text-sm dark:text-gray-200">${escapeHtml(v.text.substring(0,150))}...</p></div>`; c++; } });}
-                if(bSnap.exists()){ bSnap.forEach(ch=>{ const v=ch.val(); if(v.name&&v.name.toLowerCase().includes(q)){ html+=`<div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-bordercol shadow-sm mb-3 flex space-x-3"><i class="fas fa-book text-2xl text-primary"></i><div><h4 class="font-bold dark:text-white">${escapeHtml(v.name)}</h4><p class="text-xs text-muted">${escapeHtml(v.author)}</p></div></div>`; c++; } });}
-                res.innerHTML = c===0 ? emptyState(`'${q}' এর জন্য কোনো ফলাফল পাওয়া যায়নি।`) : `<p class="text-xs text-muted mb-3 font-semibold">${c} টি ফলাফল</p>`+html;
+        function renderDonations(main) {
+            main.innerHTML = `<div class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <i class="fas fa-hand-holding-heart text-5xl text-primary mb-4"></i>
+                    <h2 class="text-2xl font-bold dark:text-white">সংগঠনে দান করুন</h2>
+                    <p class="text-muted mt-2">আপনার দান আমাদের কার্যক্রমকে আরও বেগবান করবে ইনশাআল্লাহ।</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="donation-numbers">${getSkeleton(1)}</div>
+                <div class="mt-10 bg-white dark:bg-gray-800 p-6 rounded-xl border border-bordercol shadow-sm text-center">
+                    <h3 class="font-bold text-lg mb-2 dark:text-white">সদস্য চাঁদা বা অনুদান পাঠানোর নিয়ম</h3>
+                    <p class="text-sm text-muted">উপরের যেকোনো নাম্বারে Send Money করার পর রেফারেন্স হিসেবে আপনার নাম বা সদস্য আইডি ব্যবহার করুন।</p>
+                </div>
+            </div>`;
+            
+            get(ref(db, 'settings/orgInfo')).then(snap => {
+                const con = qs('#donation-numbers'); if(!con) return;
+                const d = snap.val() || {};
+                const makeCard = (title, num, icon, color) => `
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-bordercol text-center shadow-sm">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-${color}-50 text-${color}-600 flex items-center justify-center text-xl mb-3"><i class="${icon}"></i></div>
+                    <h4 class="font-bold text-muted mb-1">${title} (Personal)</h4>
+                    <p class="text-lg font-bold text-textcol dark:text-white tracking-wider">${escapeHtml(num||'নম্বর যুক্ত নেই')}</p>
+                </div>`;
+                con.innerHTML = makeCard('বিকাশ', d.bkash, 'fas fa-mobile-alt', 'pink') + makeCard('নগদ', d.nagad, 'fas fa-mobile-alt', 'orange') + makeCard('রকেট', d.rocket, 'fas fa-mobile-alt', 'purple');
             });
         }
 
-        function renderProfilePage(main) {
-            if(!window.currentUser) { main.innerHTML = `<div class="p-8 text-center bg-white dark:bg-gray-800 rounded-xl max-w-md mx-auto mt-10 shadow-sm border border-bordercol"><i class="fas fa-lock text-5xl text-gray-300 dark:text-gray-600 mb-4 block"></i><p class="mb-6 text-textcol dark:text-gray-300">প্রোফাইল ও ড্যাশবোর্ড দেখতে লগইন করুন</p><button onclick="openModal('login-modal')" class="bg-primary text-white px-8 py-3 rounded-lg font-bold shadow-md w-full">লগইন করুন</button></div>`; return; }
+        // --- INTEGRATED ADMIN DASHBOARD ---
+
+        function renderAdminDashboard(main) {
             main.innerHTML = `
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden mb-6 border border-bordercol dark:border-gray-700">
-                    <div class="h-32 md:h-48 bg-primary relative pattern-bg"></div>
-                    <div class="px-6 pb-6 relative">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 overflow-hidden -mt-12 md:-mt-16 mb-4 relative flex items-center justify-center text-gray-400 shadow-md">
-                            ${window.currentUserProfile?.photoURL ? `<img src="${window.currentUserProfile.photoURL}" class="w-full h-full object-cover">` : defaultAvatarSVG}
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-6"><h2 class="text-2xl font-bold text-textcol dark:text-white mb-1">অ্যাডমিন ড্যাশবোর্ড</h2><p class="text-muted text-sm">সম্পূর্ণ সিস্টেম কন্ট্রোল এবং রিপোর্ট</p></div>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol shadow-sm flex items-center space-x-4"><div class="text-3xl text-blue-500 w-12 text-center"><i class="fas fa-users"></i></div><div><p class="text-xs text-muted font-bold">সদস্য</p><h3 class="text-2xl font-bold dark:text-white" id="ad-mem">-</h3></div></div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol shadow-sm flex items-center space-x-4"><div class="text-3xl text-purple-500 w-12 text-center"><i class="fas fa-pen"></i></div><div><p class="text-xs text-muted font-bold">পোস্ট</p><h3 class="text-2xl font-bold dark:text-white" id="ad-pos">-</h3></div></div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol shadow-sm flex items-center space-x-4"><div class="text-3xl text-indigo-500 w-12 text-center"><i class="fas fa-book"></i></div><div><p class="text-xs text-muted font-bold">বই</p><h3 class="text-2xl font-bold dark:text-white" id="ad-bok">-</h3></div></div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-bordercol shadow-sm flex items-center space-x-4"><div class="text-3xl text-green-500 w-12 text-center"><i class="fas fa-wallet"></i></div><div><p class="text-xs text-muted font-bold">ক্যাশ ব্যালেন্স</p><h3 class="text-xl font-bold text-primary dark:text-green-400 truncate" id="ad-bal">-</h3></div></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Finance Panel -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-bordercol shadow-sm overflow-hidden flex flex-col">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-900 border-b border-bordercol flex justify-between items-center">
+                            <h3 class="font-bold text-primary"><i class="fas fa-money-bill-wave"></i> আয়-ব্যয় ব্যবস্থাপনা</h3>
                         </div>
-                        <h2 class="text-2xl font-bold text-textcol dark:text-white">${escapeHtml(window.currentUserProfile?.name || window.currentUser.displayName || 'নামহীন সদস্য')}</h2>
-                        <p class="text-primary dark:text-green-400 font-semibold mt-1"><i class="fas fa-id-badge w-4"></i> ${escapeHtml(window.currentUserProfile?.role || 'সাধারণ সদস্য')}</p>
-                        <p class="text-muted text-sm mt-1"><i class="fas fa-map-marker-alt w-4"></i> ${escapeHtml(window.currentUserProfile?.branch || 'শাখা নির্ধারিত নেই')}</p>
+                        <div class="p-4 space-y-4">
+                            <div class="flex space-x-3">
+                                <button onclick="window.openGenericForm('নতুন আয় যুক্ত করুন', 'fas fa-arrow-down', [{key:'title',label:'খাতের নাম'},{key:'amount',label:'পরিমাণ (৳)',type:'number'}], 'income')" class="flex-1 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 py-3 rounded-lg font-bold border border-green-200 dark:border-green-800 hover:bg-green-100 transition"><i class="fas fa-plus"></i> আয় এন্ট্রি</button>
+                                <button onclick="window.openGenericForm('নতুন ব্যয় যুক্ত করুন', 'fas fa-arrow-up', [{key:'title',label:'খাতের নাম'},{key:'amount',label:'পরিমাণ (৳)',type:'number'}], 'expenses')" class="flex-1 bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400 py-3 rounded-lg font-bold border border-red-200 dark:border-red-800 hover:bg-red-100 transition"><i class="fas fa-plus"></i> ব্যয় এন্ট্রি</button>
+                            </div>
+                            <div class="border-t border-bordercol pt-4">
+                                <div class="flex justify-between mb-2"><span class="text-muted font-bold">মোট আয়:</span> <span class="font-bold text-green-600" id="tx-inc">৳ 0</span></div>
+                                <div class="flex justify-between"><span class="text-muted font-bold">মোট ব্যয়:</span> <span class="font-bold text-red-600" id="tx-exp">৳ 0</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Panel -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-bordercol shadow-sm overflow-hidden">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-900 border-b border-bordercol">
+                            <h3 class="font-bold text-primary"><i class="fas fa-cogs"></i> অর্গানাইজেশন সেটিংস</h3>
+                        </div>
+                        <form id="admin-settings-form" class="p-4 space-y-3">
+                            <div><label class="block text-xs font-bold text-muted mb-1">সংগঠনের নাম</label><input type="text" id="as_orgName" class="w-full p-2 border rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div><label class="block text-xs font-bold text-muted mb-1">বিকাশ</label><input type="text" id="as_bkash" class="w-full p-2 text-sm border rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></div>
+                                <div><label class="block text-xs font-bold text-muted mb-1">নগদ</label><input type="text" id="as_nagad" class="w-full p-2 text-sm border rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></div>
+                                <div><label class="block text-xs font-bold text-muted mb-1">রকেট</label><input type="text" id="as_rocket" class="w-full p-2 text-sm border rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></div>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white font-bold py-2.5 rounded hover:bg-darkgreen transition mt-2">সেটিংস সেভ করুন</button>
+                        </form>
                     </div>
                 </div>
-                <div class="border-b border-bordercol dark:border-gray-700 mb-6 flex overflow-x-auto no-scrollbar">
-                    <button class="px-4 py-3 font-bold border-b-2 border-primary text-primary whitespace-nowrap">আমার পোস্ট</button>
-                    <button class="px-4 py-3 font-semibold border-b-2 border-transparent text-muted whitespace-nowrap">আমার চাঁদা</button>
-                    <button class="px-4 py-3 font-semibold border-b-2 border-transparent text-muted whitespace-nowrap">বইয়ের ইতিহাস</button>
-                </div>
-                <div id="profile-content" class="space-y-4">${getSkeleton(2)}</div>
             </div>`;
-            // Fetch user specific posts
-            get(ref(db, 'posts')).then(snap => {
-                const con = document.getElementById('profile-content'); if(!con) return;
-                if(!snap.exists()) { con.innerHTML = emptyState("আপনার কোনো পোস্ট নেই।"); return; }
-                const up = []; snap.forEach(c=>{ if(c.val().userId === window.currentUser.uid) up.push({id:c.key,...c.val()}); });
-                if(up.length===0) { con.innerHTML = emptyState("আপনার কোনো পোস্ট নেই।"); return; }
-                up.sort((a,b)=>b.timestamp-a.timestamp);
-                con.innerHTML = up.map(p=>createPostCard(p)).join('');
-            });
-        }
 
-        function renderJoinForm(main) {
-            main.innerHTML = `<div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-sm border border-bordercol dark:border-gray-700"><h2 class="text-xl md:text-2xl font-bold text-primary mb-2 text-center">সদস্য হওয়ার আবেদন</h2><p class="text-center text-muted mb-8 text-sm">ইসলামী সাহিত্য কেন্দ্র, পঞ্চগড় -এর কার্যক্রমে যুক্ত হতে ফর্মটি পূরণ করুন।</p><form id="join-form" onsubmit="alert('Firebase Security Rules block public writes by default unless authenticated. Implement via cloud fn or auth check.'); event.preventDefault();" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-xs font-semibold text-muted mb-1">পূর্ণ নাম</label><input type="text" required class="w-full p-3 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div><div><label class="block text-xs font-semibold text-muted mb-1">মোবাইল নম্বর</label><input type="text" required class="w-full p-3 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div></div><div><label class="block text-xs font-semibold text-muted mb-1">ঠিকানা (উপজেলা, ইউনিয়ন)</label><input type="text" required class="w-full p-3 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div><button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-bold shadow mt-4">আবেদন জমা দিন</button></form></div>`;
-        }
+            // Setup Listeners for Admin Dashboard
+            addListener('members', s => qs('#ad-mem').innerText = s.size||0);
+            addListener('posts', s => qs('#ad-pos').innerText = s.size||0);
+            addListener('books', s => qs('#ad-bok').innerText = s.size||0);
 
-        // Post & Comment Logic
-        window.openCreatePostModal = () => {
-            if(!window.currentUser) { alert("পোস্ট করতে লগইন করুন!"); return openModal('login-modal'); }
-            openModal('create-post-modal');
-        }
-        
-        window.submitPost = async () => {
-            if(!window.currentUser) return;
-            const text = document.getElementById('post-text').value; if(!text) return alert('কিছু লিখুন');
-            const btn = document.getElementById('post-submit-btn'); btn.innerText = "প্রকাশ করা হচ্ছে..."; btn.disabled = true;
-            try {
-                let mediaUrl = null, mediaType = null;
-                const file = document.getElementById('post-file').files[0];
-                if(file) {
-                    const snap = await uploadBytesResumable(sRef(storage, `posts/${Date.now()}_${file.name}`), file);
-                    mediaUrl = await getDownloadURL(snap.ref);
-                    mediaType = file.type.startsWith('video/') ? 'video' : 'image';
+            // Finance Calculator
+            Promise.all([get(ref(db,'income')), get(ref(db,'expenses'))]).then(([iS, eS]) => {
+                let inc=0, exp=0;
+                if(iS.exists()) iS.forEach(c=>inc+=parseFloat(c.val().amount||0));
+                if(eS.exists()) eS.forEach(c=>exp+=parseFloat(c.val().amount||0));
+                if(qs('#tx-inc')) {
+                    qs('#tx-inc').innerText = formatMoney(inc);
+                    qs('#tx-exp').innerText = formatMoney(exp);
+                    qs('#ad-bal').innerText = formatMoney(inc - exp);
                 }
-                await push(ref(db, 'posts'), {
-                    userId: window.currentUser.uid, authorName: window.currentUserProfile?.name || window.currentUser.displayName || 'সদস্য',
-                    authorRole: window.currentUserProfile?.role || 'সদস্য', authorImg: window.currentUserProfile?.photoURL || '',
-                    branch: window.currentUserProfile?.branch || '', text, postType: document.getElementById('post-type').value,
-                    hadithRef: document.getElementById('post-ref').value, location: document.getElementById('post-location').value,
-                    mediaUrl, mediaType, timestamp: serverTimestamp(), likesCount: 0, commentsCount: 0
-                });
-                closeModal('create-post-modal'); document.getElementById('create-post-form').reset();
-            } catch(e) { alert('ত্রুটি: ' + e.message); }
-            btn.innerText = "প্রকাশ করুন"; btn.disabled = false;
-        }
-
-        window.toggleLike = postId => {
-            if(!window.currentUser) return alert('লাইক করতে লগইন করুন');
-            const lRef = ref(db, `likes/${postId}/${window.currentUser.uid}`);
-            get(lRef).then(s => {
-                if(s.exists()){ window.remove(lRef); runTransaction(ref(db,`posts/${postId}/likesCount`), c=>(c||1)-1); }
-                else { set(lRef,true); runTransaction(ref(db,`posts/${postId}/likesCount`), c=>(c||0)+1); }
             });
-        }
 
-        window.openComments = postId => {
-            window.currentPostIdForComment = postId;
-            openModal('comments-modal');
-            get(ref(db, `posts/${postId}`)).then(s => { if(s.exists()) document.getElementById('comment-post-text').innerText = s.val().text; });
-            const clist = document.getElementById('comments-list'); clist.innerHTML = '<div class="text-center py-10"><i class="fas fa-spinner fa-spin text-primary text-2xl"></i></div>';
-            onValue(ref(db, `comments/${postId}`), snap => {
-                if(!snap.exists()){ clist.innerHTML = emptyState("কোনো মন্তব্য নেই। প্রথম মন্তব্য করুন!"); return; }
-                let html = '';
-                snap.forEach(c => {
-                    const v = c.val();
-                    html += `<div class="bg-white dark:bg-gray-700 p-3 rounded-xl shadow-sm border border-bordercol dark:border-gray-600"><div class="flex justify-between items-start mb-1"><h5 class="font-bold text-sm text-textcol dark:text-gray-100 flex items-center space-x-1"><i class="fas fa-user-circle text-muted"></i> <span>${escapeHtml(v.name)}</span></h5><span class="text-[10px] text-muted">${v.timestamp?new Date(v.timestamp).toLocaleTimeString('bn-BD'):''}</span></div><p class="text-sm text-textcol dark:text-gray-200 mt-1">${escapeHtml(v.text)}</p></div>`;
-                });
-                clist.innerHTML = html; clist.scrollTop = clist.scrollHeight;
+            // Settings Manager
+            get(ref(db, 'settings/orgInfo')).then(snap => {
+                if(snap.exists() && qs('#as_orgName')) {
+                    const d = snap.val();
+                    ['orgName','bkash','nagad','rocket'].forEach(k => { if(d[k]) qs('#as_'+k).value = d[k]; });
+                }
             });
-            document.getElementById('visitor-comment-fields').style.display = window.currentUser ? 'none' : 'block';
+
+            const sf = qs('#admin-settings-form');
+            if(sf) sf.onsubmit = async e => {
+                e.preventDefault(); showLoader('আপডেট হচ্ছে...');
+                const d = {}; ['orgName','bkash','nagad','rocket'].forEach(k => { d[k] = qs('#as_'+k).value; });
+                await set(ref(db, 'settings/orgInfo'), d);
+                qs('#header-org-name').innerText = d.orgName || 'ইসলামী সাহিত্য কেন্দ্র';
+                hideLoader(); window.showToast('সেটিংস আপডেট হয়েছে');
+            };
         }
 
-        window.submitComment = () => {
-            const text = document.getElementById('comment-text').value; if(!text) return;
-            const postId = window.currentPostIdForComment;
-            let data = { text, timestamp: serverTimestamp() };
-            if(window.currentUser){ data.name = window.currentUserProfile?.name||'সদস্য'; data.uid = window.currentUser.uid; }
-            else { data.name = document.getElementById('comment-name').value||'ভিজিটর'; data.phone = document.getElementById('comment-phone').value; }
-            push(ref(db, `comments/${postId}`), data).then(() => {
-                document.getElementById('comment-text').value = '';
-                runTransaction(ref(db,`posts/${postId}/commentsCount`), c=>(c||0)+1);
-            });
-        }
+        // Search & Profile (Basic implementations)
+        function renderSearch(main) { main.innerHTML = `<div class="max-w-xl mx-auto py-10 text-center"><i class="fas fa-search text-5xl text-gray-300 mb-4"></i><h2 class="text-xl font-bold dark:text-white mb-2">সার্চ ফিচার</h2><p class="text-muted">সার্চ ফাংশনালিটি মূল ডেটাবেসের সাথে সংযুক্ত করা হচ্ছে।</p></div>`; }
+        function renderProfile(main) { main.innerHTML = window.currentUser ? emptyState("প্রোফাইল তথ্য লোড হচ্ছে...") : emptyState("প্রোফাইল দেখতে লগইন করুন"); }
 
-        // Sidebar Loaders
-        onValue(ref(db, 'settings/orgInfo'), s => {
+        // General Info Sidebar Loaders (Runs once)
+        get(ref(db, 'settings/orgInfo')).then(s => {
             const el = document.getElementById('sidebar-org-info'); if(!el) return;
-            if(s.exists()){ const v=s.val(); el.innerHTML = `<p class="text-sm dark:text-gray-300 leading-relaxed">${escapeHtml(v.description)}</p><div class="mt-3 text-xs text-muted space-y-1"><p><i class="fas fa-map-marker-alt w-4 text-primary"></i> ${escapeHtml(v.address)}</p><p><i class="fas fa-phone w-4 text-primary"></i> ${escapeHtml(v.phone)}</p></div>`; }
-            else el.innerHTML = '<p class="text-xs text-muted">তথ্য পাওয়া যায়নি</p>';
-        });
-        onValue(ref(db, 'notices'), s => {
-            const el = document.getElementById('sidebar-notices'); if(!el) return;
-            if(s.exists()){
-                let h=''; s.forEach(c=>{ const v=c.val(); if(v.priority==='high') h+=`<div class="bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 p-2 rounded text-sm shadow-sm mb-2"><h5 class="font-bold text-red-700 dark:text-red-400">${escapeHtml(v.title)}</h5></div>`;});
-                el.innerHTML = h || '<p class="text-xs text-muted">কোনো জরুরি নোটিশ নেই</p>';
-            } else el.innerHTML = '<p class="text-xs text-muted">কোনো নোটিশ নেই</p>';
+            if(s.exists() && s.val().orgName){ qs('#header-org-name').innerText = s.val().orgName; el.innerHTML = `<p class="text-sm dark:text-gray-300">একটি ইসলামিক দাওয়াতী সংগঠন।</p>`; }
+            else el.innerHTML = '<p class="text-xs text-muted">তথ্য নেই</p>';
         });
 
-        // Initialize Home
+        // Initialize App
         window.onload = () => { window.navigateTo('home'); }
-        
-        // Expose remove for like toggle
-        import { remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-        window.remove = remove;
     </script>
 </body>
 </html>
