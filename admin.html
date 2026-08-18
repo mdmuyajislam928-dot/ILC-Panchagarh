@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ILC Panchagarh Admin | Knowledge • Dawah • Service</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0A5C36',
+                        darkgreen: '#042D19',
+                        gold: '#D4AF37',
+                        bgcol: '#F4F6F8',
+                        textcol: '#111827',
+                        muted: '#6B7280',
+                        bordercol: '#E5E7EB'
+                    },
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(107, 114, 128, 0.3); border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: rgba(75, 85, 99, 0.5); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .skeleton { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .modal-overlay { background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .loader-spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #fff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-bgcol text-textcol dark:bg-gray-900 dark:text-gray-100 h-screen overflow-hidden text-sm md:text-base transition-colors duration-200">
+
+    <!-- Global Fullscreen Loader -->
+    <div id="global-loader" class="fixed inset-0 z-[100] bg-primary flex flex-col items-center justify-center transition-opacity duration-300">
+        <div class="loader-spinner mb-4"></div>
+        <h2 class="text-white font-bold text-xl tracking-wider">ILC PANCHAGARH ADMIN</h2>
+        <p class="text-green-200 text-xs tracking-widest mt-1">CONNECTING TO SECURE SERVER...</p>
+    </div>
+
+    <!-- Login View -->
+    <div id="login-view" class="hidden fixed inset-0 z-[90] bg-bgcol dark:bg-gray-900 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-bordercol dark:border-gray-700">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white text-3xl mx-auto mb-4 shadow-lg shadow-green-900/50">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-primary dark:text-white">ILC Panchagarh Admin</h1>
+                <p class="text-xs text-muted font-semibold mt-1">Knowledge • Dawah • Service</p>
+            </div>
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-muted uppercase mb-1">ইমেইল ঠিকানা</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-muted"></i>
+                        <input type="email" id="login-email" required class="w-full pl-10 p-3 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none focus:ring-2 focus:ring-primary transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-muted uppercase mb-1">পাসওয়ার্ড</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-muted"></i>
+                        <input type="password" id="login-pass" required class="w-full pl-10 p-3 border border-bordercol dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white outline-none focus:ring-2 focus:ring-primary transition">
+                    </div>
+                </div>
+                <button type="submit" id="login-btn" class="w-full bg-primary hover:bg-darkgreen text-white font-bold py-3 rounded-lg shadow-md transition flex justify-center items-center">
+                    <span>লগইন করুন</span>
+                </button>
+                <div class="text-center mt-4">
+                    <a href="#" onclick="window.resetPassword()" class="text-sm text-primary hover:underline">পাসওয়ার্ড ভুলে গেছেন?</a>
+                </div>
+            </form>
+            <div id="login-error" class="hidden mt-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded"></div>
+        </div>
+    </div>
+
+    <!-- Access Denied View -->
+    <div id="denied-view" class="hidden fixed inset-0 z-[90] bg-bgcol dark:bg-gray-900 flex items-center justify-center p-4">
+        <div class="text-center max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-red-200 dark:border-red-900/50">
+            <i class="fas fa-shield-alt text-6xl text-red-500 mb-4"></i>
+            <h1 class="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">Access Denied</h1>
+            <p class="text-muted dark:text-gray-400 mb-6">আপনার এই প্যানেলে প্রবেশাধিকার নেই। শুধুমাত্র অনুমোদিত অ্যাডমিনরা প্রবেশ করতে পারবেন।</p>
+            <button onclick="window.logout()" class="bg-gray-200 dark:bg-gray-700 text-textcol dark:text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition">ফিরে যান (Logout)</button>
+        </div>
+    </div>
+
+    <!-- Main Admin Application -->
+    <div id="admin-app" class="hidden h-screen flex flex-col md:flex-row w-full overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-darkgreen text-white flex-shrink-0 flex flex-col h-full absolute md:relative z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="h-16 flex items-center justify-between px-4 border-b border-green-800 bg-primary">
+                <div class="flex items-center space-x-2 font-bold text-lg tracking-tight">
+                    <i class="fas fa-mosque text-gold"></i>
+                    <span>ILC Admin</span>
+                </div>
+                <button class="md:hidden text-white" onclick="window.toggleSidebar()"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto py-4 custom-scrollbar">
+                <p class="px-4 text-[10px] font-bold text-green-400 uppercase tracking-widest mb-2">মূল মেনু</p>
+                <nav class="space-y-0.5 px-2 mb-6" id="nav-main"></nav>
+                
+                <p class="px-4 text-[10px] font-bold text-green-400 uppercase tracking-widest mb-2">হিসাব ও অর্থ</p>
+                <nav class="space-y-0.5 px-2 mb-6" id="nav-finance"></nav>
+                
+                <p class="px-4 text-[10px] font-bold text-green-400 uppercase tracking-widest mb-2">সিস্টেম</p>
+                <nav class="space-y-0.5 px-2" id="nav-system"></nav>
+            </div>
+            <div class="p-4 border-t border-green-800 text-xs text-green-400 text-center">
+                v1.0.0 • Secure Panel
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-30 md:hidden" onclick="window.toggleSidebar()"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col h-full min-w-0 bg-bgcol dark:bg-gray-900 relative">
+            
+            <!-- Header -->
+            <header class="h-16 bg-white dark:bg-gray-800 border-b border-bordercol dark:border-gray-700 flex items-center justify-between px-4 lg:px-6 shadow-sm flex-shrink-0">
+                <div class="flex items-center space-x-4">
+                    <button class="md:hidden text-muted hover:text-primary transition" onclick="window.toggleSidebar()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h2 id="page-title" class="font-bold text-lg text-textcol dark:text-white hidden sm:block">ড্যাশবোর্ড</h2>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.toggleTheme()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-muted flex items-center justify-center hover:text-primary transition outline-none">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 border border-bordercol dark:border-gray-600 rounded-full py-1 pl-1 pr-3 outline-none">
+                            <div class="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs"><i class="fas fa-user-shield"></i></div>
+                            <span class="text-xs font-bold text-textcol dark:text-white" id="header-admin-name">Admin</span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-bordercol dark:border-gray-700 hidden group-hover:block z-50">
+                            <div class="p-3 border-b border-bordercol dark:border-gray-700">
+                                <p class="text-xs text-muted font-bold">লগড ইন হিসেবে</p>
+                                <p class="text-sm font-bold text-primary truncate" id="header-admin-email"></p>
+                            </div>
+                            <button onclick="window.logout()" class="w-full text-left px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-bold transition flex items-center"><i class="fas fa-sign-out-alt w-5"></i> লগআউট</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Workspace -->
+            <main id="workspace" class="flex-1 overflow-y-auto p-4 lg:p-6 relative no-scrollbar">
+                <!-- Content injected here via JS -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Generic Modal Container -->
+    <div id="generic-modal" class="hidden fixed inset-0 z-[100] modal-overlay items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col transform transition-transform scale-95 opacity-0" id="generic-modal-box">
+            <div class="px-6 py-4 border-b border-bordercol dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900 rounded-t-2xl">
+                <h3 id="modal-title" class="font-bold text-lg text-primary flex items-center space-x-2"></h3>
+                <button onclick="window.closeModal()" class="text-muted hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6 flex-1 overflow-y-auto" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-[110] bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 pointer-events-none">
+        <i id="toast-icon" class="fas fa-check-circle text-green-400"></i>
+        <span id="toast-msg" class="text-sm font-medium"></span>
+    </div>
+
+    <!-- Fullscreen Action Loader -->
+    <div id="action-loader" class="hidden fixed inset-0 z-[120] bg-black/60 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl flex flex-col items-center">
+            <div class="loader-spinner !border-t-primary !border-gray-200 dark:!border-gray-600 mb-3"></div>
+            <p id="action-loader-text" class="text-sm font-bold text-textcol dark:text-white">প্রসেসিং হচ্ছে...</p>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getDatabase, ref, onValue, get, set, push, update, remove, serverTimestamp, query, orderByChild } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1XvPzg-4cHe729NOL_2MXX6hnYv94mUY",
+            authDomain: "islamic-dawati-center.firebaseapp.com",
+            databaseURL: "https://islamic-dawati-center-default-rtdb.firebaseio.com",
+            projectId: "islamic-dawati-center",
+            storageBucket: "islamic-dawati-center.firebasestorage.app",
+            messagingSenderId: "141362944322",
+            appId: "1:141362944322:web:9794c4d1d869705a0fd0db"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const storage = getStorage(app);
+
+        // Global State
+        window.currentAdmin = null;
+        window.currentRoute = 'dashboard';
+        window.activeListeners = [];
+
+        // Utilities
+        const qs = s => document.querySelector(s);
+        const show = id => document.getElementById(id).classList.remove('hidden');
+        const hide = id => document.getElementById(id).classList.add('hidden');
+        const escapeHtml = str => (str||'').toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        const formatMoney = amt => '৳ ' + parseFloat(amt||0).toLocaleString('bn-BD');
+        const formatDate = ms => ms ? new Date(ms).toLocaleDateString('bn-BD', {year:'numeric', month:'short', day:'numeric'}) : '-';
+        
+        window.toggleTheme = () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('admin_theme', isDark ? 'dark' : 'light');
+        };
+        if(localStorage.getItem('admin_theme')==='dark' || (!localStorage.getItem('admin_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        window.toggleSidebar = () => {
+            const sb = document.getElementById('sidebar');
+            const ov = document.getElementById('sidebar-overlay');
+            if(sb.classList.contains('-translate-x-full')) {
+                sb.classList.remove('-translate-x-full'); show('sidebar-overlay');
+            } else {
+                sb.classList.add('-translate-x-full'); hide('sidebar-overlay');
+            }
+        };
+
+        window.showToast = (msg, type='success') => {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            document.getElementById('toast-icon').className = type === 'success' ? 'fas fa-check-circle text-green-400' : 'fas fa-exclamation-circle text-red-400';
+            t.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
+        };
+
+        const showActionLoader = (text='প্রসেসিং হচ্ছে...') => { document.getElementById('action-loader-text').innerText = text; show('action-loader'); };
+        const hideActionLoader = () => hide('action-loader');
+
+        const getSkeleton = () => `<div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 skeleton mb-4"><div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div><div class="space-y-3"><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded w-full"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded w-full"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded w-full"></div></div></div>`;
+        const getEmptyState = msg => `<div class="py-16 px-4 text-center bg-white dark:bg-gray-800 rounded-xl border border-dashed border-bordercol dark:border-gray-600 shadow-sm col-span-full"><div class="w-20 h-20 bg-gray-50 dark:bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-folder-open text-3xl text-gray-400 dark:text-gray-500"></i></div><h3 class="text-lg font-bold text-textcol dark:text-gray-200 mb-1">কোনো তথ্য পাওয়া যায়নি</h3><p class="text-muted text-sm">${msg}</p></div>`;
+
+        // Modal Logic
+        window.closeModal = () => {
+            const box = document.getElementById('generic-modal-box');
+            box.classList.remove('scale-100', 'opacity-100');
+            box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => hide('generic-modal'), 200);
+        };
+        
+        const openModal = (title, icon, contentHTML) => {
+            document.getElementById('modal-title').innerHTML = `<i class="${icon}"></i> <span>${title}</span>`;
+            document.getElementById('modal-body').innerHTML = contentHTML;
+            show('generic-modal');
+            setTimeout(() => {
+                const box = document.getElementById('generic-modal-box');
+                box.classList.remove('scale-95', 'opacity-0');
+                box.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        const confirmAction = (msg, callback) => {
+            openModal('নিশ্চিত করুন', 'fas fa-exclamation-triangle text-yellow-500', `
+                <div class="text-center py-4">
+                    <p class="text-lg text-textcol dark:text-white mb-6">${msg}</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="window.closeModal()" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-textcol dark:text-white font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition">বাতিল</button>
+                        <button id="confirm-btn-action" class="px-6 py-2 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 transition shadow">হ্যাঁ, নিশ্চিত</button>
+                    </div>
+                </div>
+            `);
+            document.getElementById('confirm-btn-action').onclick = () => { window.closeModal(); callback(); };
+        };
+
+        const logAudit = async (action, target, desc) => {
+            if(!window.currentAdmin) return;
+            await push(ref(db, 'auditLogs'), { action, target, desc, adminUid: window.currentAdmin.uid, adminEmail: window.currentAdmin.email, timestamp: serverTimestamp() });
+        };
+
+        // Navigation Configuration
+        const routes = [
+            { id: 'dashboard', section: 'main', icon: 'fas fa-chart-pie', label: 'ড্যাশবোর্ড' },
+            { id: 'members', section: 'main', icon: 'fas fa-users', label: 'সদস্যবৃন্দ', dbPath: 'members' },
+            { id: 'applications', section: 'main', icon: 'fas fa-user-plus', label: 'আবেদনসমূহ', dbPath: 'applications' },
+            { id: 'posts', section: 'main', icon: 'fas fa-edit', label: 'পোস্টসমূহ', dbPath: 'posts' },
+            { id: 'hadith', section: 'main', icon: 'fas fa-quran', label: 'হাদিস ও প্রবন্ধ', dbPath: 'hadith' },
+            { id: 'books', section: 'main', icon: 'fas fa-book', label: 'বইসমূহ', dbPath: 'books' },
+            { id: 'bookDistribution', section: 'main', icon: 'fas fa-hand-holding', label: 'বই বিতরণ', dbPath: 'bookDistribution' },
+            { id: 'branches', section: 'main', icon: 'fas fa-code-branch', label: 'শাখাসমূহ', dbPath: 'branches' },
+            { id: 'staff', section: 'main', icon: 'fas fa-user-tie', label: 'কর্মী/স্টাফ', dbPath: 'workers' },
+            { id: 'messages', section: 'main', icon: 'fas fa-comments', label: 'মেসেজসমূহ', dbPath: 'messages' },
+            
+            { id: 'donations', section: 'finance', icon: 'fas fa-hand-holding-heart', label: 'দান/অনুদান', dbPath: 'donations' },
+            { id: 'fees', section: 'finance', icon: 'fas fa-id-card', label: 'সদস্য চাঁদা', dbPath: 'memberFees' },
+            { id: 'income', section: 'finance', icon: 'fas fa-arrow-down text-green-400', label: 'আয়', dbPath: 'income' },
+            { id: 'expenses', section: 'finance', icon: 'fas fa-arrow-up text-red-400', label: 'ব্যয়', dbPath: 'expenses' },
+            { id: 'reports', section: 'finance', icon: 'fas fa-chart-bar', label: 'আর্থিক রিপোর্ট', dbPath: 'reports' },
+
+            { id: 'notices', section: 'system', icon: 'fas fa-bullhorn', label: 'নোটিশ', dbPath: 'notices' },
+            { id: 'events', section: 'system', icon: 'fas fa-calendar-alt', label: 'ইভেন্ট', dbPath: 'events' },
+            { id: 'activities', section: 'system', icon: 'fas fa-running', label: 'কার্যক্রম', dbPath: 'activities' },
+            { id: 'gallery', section: 'system', icon: 'fas fa-images', label: 'গ্যালারি', dbPath: 'gallery' },
+            { id: 'notifications', section: 'system', icon: 'fas fa-bell', label: 'নোটিফিকেশন', dbPath: 'notifications' },
+            { id: 'settings', section: 'system', icon: 'fas fa-cog', label: 'সেটিংস', dbPath: 'settings' }
+        ];
+
+        function buildSidebar() {
+            ['main', 'finance', 'system'].forEach(sec => {
+                const nav = document.getElementById(`nav-${sec}`);
+                nav.innerHTML = routes.filter(r => r.section === sec).map(r => `
+                    <a href="#" onclick="window.navigate('${r.id}'); return false;" id="menu-${r.id}" class="flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-300 hover:bg-green-800 hover:text-white transition font-medium">
+                        <i class="${r.icon} w-5 text-center"></i> <span>${r.label}</span>
+                    </a>
+                `).join('');
+            });
+        }
+
+        const clearListeners = () => { window.activeListeners.forEach(unsub => unsub()); window.activeListeners = []; };
+        const addListener = (path, callback) => { const r = ref(db, path); const u = onValue(r, callback); window.activeListeners.push(() => u()); };
+
+        window.navigate = (routeId) => {
+            if(window.innerWidth < 768) { document.getElementById('sidebar').classList.add('-translate-x-full'); hide('sidebar-overlay'); }
+            clearListeners();
+            window.currentRoute = routeId;
+            document.querySelectorAll('[id^="menu-"]').forEach(el => el.classList.remove('bg-primary', 'text-white', 'shadow-inner', 'font-bold'));
+            document.getElementById(`menu-${routeId}`).classList.add('bg-primary', 'text-white', 'shadow-inner', 'font-bold');
+            const route = routes.find(r => r.id === routeId);
+            document.getElementById('page-title').innerText = route.label;
+            
+            const ws = document.getElementById('workspace');
+            ws.innerHTML = getSkeleton();
+
+            if(routeId === 'dashboard') renderDashboard(ws);
+            else if(routeId === 'settings') renderSettings(ws);
+            else if(routeId === 'reports') renderReports(ws);
+            else renderGenericModule(ws, route);
+        };
+
+        // Generic CRUD Factory
+        function renderGenericModule(container, config) {
+            container.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 flex flex-col h-full overflow-hidden">
+                    <div class="p-4 border-b border-bordercol dark:border-gray-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-50 dark:bg-gray-900">
+                        <div class="relative flex-1 max-w-md">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted"></i>
+                            <input type="text" id="search-input" placeholder="খুঁজুন..." class="w-full pl-10 pr-4 py-2 border border-bordercol dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-primary text-sm">
+                        </div>
+                        <button onclick="window.showAddForm('${config.id}')" class="bg-primary hover:bg-darkgreen text-white px-4 py-2 rounded-lg font-bold shadow flex items-center space-x-2 transition whitespace-nowrap text-sm">
+                            <i class="fas fa-plus"></i> <span>নতুন যুক্ত করুন</span>
+                        </button>
+                    </div>
+                    <div class="flex-1 overflow-auto bg-bgcol dark:bg-gray-800/50 p-4" id="data-container">
+                        ${getSkeleton()}
+                    </div>
+                </div>
+            `;
+
+            addListener(config.dbPath, snap => {
+                const dt = document.getElementById('data-container'); if(!dt) return;
+                if(!snap.exists()) { dt.innerHTML = getEmptyState(`এখনও কোনো ${config.label} যুক্ত করা হয়নি।`); return; }
+                const items = []; snap.forEach(c => { items.push({ id: c.key, ...c.val() }); });
+                items.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0)); // default sort desc
+                
+                // Keep minimal code by rendering generic cards based on object keys (skipping internal keys)
+                let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
+                items.forEach(item => {
+                    const title = escapeHtml(item.title || item.name || item.text?.substring(0,30) || item.donorName || 'Unnamed');
+                    const img = item.imageUrl || item.photoURL || item.image || '';
+                    const excludeKeys = ['id','timestamp','imageUrl','photoURL','image','uid','password'];
+                    let details = '';
+                    for(const [k,v] of Object.entries(item)) {
+                        if(!excludeKeys.includes(k) && typeof v !== 'object') {
+                            const val = String(v).length > 50 ? String(v).substring(0,50)+'...' : v;
+                            details += `<p class="text-xs border-b border-bordercol dark:border-gray-700 py-1"><span class="text-muted font-bold capitalize">${k}:</span> <span class="text-textcol dark:text-gray-300">${escapeHtml(val)}</span></p>`;
+                        }
+                    }
+                    html += `
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-bordercol dark:border-gray-700 hover:shadow-md transition group">
+                        <div class="flex space-x-3 mb-3">
+                            ${img ? `<div class="w-12 h-12 rounded overflow-hidden bg-gray-100 flex-shrink-0 border border-bordercol"><img src="${img}" class="w-full h-full object-cover"></div>` : `<div class="w-12 h-12 rounded bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 border border-bordercol"><i class="${config.icon} text-xl"></i></div>`}
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-textcol dark:text-white truncate" title="${title}">${title}</h4>
+                                <p class="text-[10px] text-muted">${formatDate(item.timestamp)}</p>
+                            </div>
+                        </div>
+                        <div class="mb-4 h-24 overflow-y-auto no-scrollbar">${details}</div>
+                        <div class="flex justify-end space-x-2 border-t border-bordercol dark:border-gray-700 pt-3">
+                            <button onclick="window.deleteItem('${config.dbPath}', '${item.id}', '${escapeHtml(title)}')"" class="w-8 h-8 rounded-full bg-red-50 dark:bg-red-900/30 text-red-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center"><i class="fas fa-trash-alt text-xs"></i></button>
+                        </div>
+                    </div>`;
+                });
+                html += `</div>`;
+                dt.innerHTML = html;
+
+                // Simple client side search
+                qs('#search-input').oninput = e => {
+                    const q = e.target.value.toLowerCase();
+                    dt.querySelectorAll('.group').forEach(card => {
+                        card.style.display = card.innerText.toLowerCase().includes(q) ? 'block' : 'none';
+                    });
+                };
+            });
+        }
+
+        // Generic Add Logic
+        window.showAddForm = (routeId) => {
+            const r = routes.find(x=>x.id===routeId);
+            let formHTML = `<form id="generic-add-form" class="space-y-4">`;
+            
+            // Define form structure based on route
+            const schema = {
+                books: [{k:'name',l:'বইয়ের নাম'},{k:'author',l:'লেখক'},{k:'publisher',l:'প্রকাশনী'},{k:'totalCopies',l:'মোট কপি',t:'number'}],
+                branches: [{k:'name',l:'শাখার নাম'},{k:'location',l:'অবস্থান'},{k:'leader',l:'পরিচালক'}],
+                notices: [{k:'title',l:'শিরোনাম'},{k:'description',l:'বিবরণ',t:'textarea'}],
+                income: [{k:'title',l:'আয়ের খাত'},{k:'amount',l:'পরিমাণ (৳)',t:'number'},{k:'source',l:'উৎস'}],
+                expenses: [{k:'title',l:'ব্যয়ের খাত'},{k:'amount',l:'পরিমাণ (৳)',t:'number'},{k:'category',l:'ক্যাটাগরি'}],
+                donations: [{k:'donorName',l:'দাতার নাম'},{k:'amount',l:'পরিমাণ (৳)',t:'number'},{k:'method',l:'মাধ্যম (বিকাশ/নগদ/ব্যাংক)'}],
+                bookDistribution: [{k:'memberId',l:'সদস্য/শাখা'},{k:'bookName',l:'বইয়ের নাম'},{k:'quantity',l:'পরিমাণ',t:'number'},{k:'bookPrice',l:'প্রতি কপি মূল্য',t:'number'}],
+                hadith: [{k:'text',l:'হাদিস/প্রবন্ধ',t:'textarea'},{k:'reference',l:'রেফারেন্স'}]
+            };
+
+            const fields = schema[routeId] || [{k:'title',l:'শিরোনাম'},{k:'description',l:'বিবরণ',t:'textarea'}];
+            
+            fields.forEach(f => {
+                if(f.t==='textarea') formHTML += `<div><label class="block text-xs font-bold text-muted mb-1">${f.l}</label><textarea id="f_${f.k}" required rows="3" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></textarea></div>`;
+                else formHTML += `<div><label class="block text-xs font-bold text-muted mb-1">${f.l}</label><input type="${f.t||'text'}" id="f_${f.k}" required class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 outline-none"></div>`;
+            });
+            
+            // Add image uploader generic
+            formHTML += `
+                <div><label class="block text-xs font-bold text-muted mb-1">ছবি আপলোড (ঐচ্ছিক)</label>
+                <input type="file" id="f_image" accept="image/*" class="w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-primary hover:file:bg-green-100 dark:file:bg-gray-700 dark:file:text-white outline-none"></div>
+                <div class="pt-4 border-t border-bordercol dark:border-gray-700"><button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg shadow-md hover:bg-darkgreen transition">সংরক্ষণ করুন</button></div>
+            </form>`;
+
+            openModal(`${r.label} যুক্ত করুন`, r.icon, formHTML);
+            
+            document.getElementById('generic-add-form').onsubmit = async e => {
+                e.preventDefault();
+                showActionLoader('সংরক্ষণ করা হচ্ছে...');
+                try {
+                    let data = { timestamp: serverTimestamp() };
+                    fields.forEach(f => { data[f.k] = document.getElementById(`f_${f.k}`).value; });
+                    
+                    // Specific calculations
+                    if(routeId==='bookDistribution') data.totalValue = parseFloat(data.quantity||0) * parseFloat(data.bookPrice||0);
+                    if(['income','expenses','donations'].includes(routeId)) data.amount = parseFloat(data.amount||0);
+
+                    const file = document.getElementById('f_image').files[0];
+                    if(file) {
+                        const snap = await uploadBytesResumable(sRef(storage, `${r.dbPath}/${Date.now()}_${file.name}`), file);
+                        data.imageUrl = await getDownloadURL(snap.ref);
+                    }
+                    await push(ref(db, r.dbPath), data);
+                    logAudit(`Added ${routeId}`, data.title||data.name||'Item', JSON.stringify(data));
+                    window.closeModal(); window.showToast('সফলভাবে যুক্ত হয়েছে!');
+                } catch(err) { alert(err.message); }
+                hideActionLoader();
+            };
+        };
+
+        window.deleteItem = (path, id, name) => {
+            confirmAction(`আপনি কি সত্যিই '${name}' মুছে ফেলতে চান?`, async () => {
+                showActionLoader('মুছে ফেলা হচ্ছে...');
+                try { await remove(ref(db, `${path}/${id}`)); logAudit(`Deleted from ${path}`, id, name); window.showToast('মুছে ফেলা হয়েছে!'); }
+                catch(e) { alert(e.message); }
+                hideActionLoader();
+            });
+        };
+
+        // Specific Modules
+        function renderDashboard(container) {
+            container.innerHTML = `
+                <div class="mb-6 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
+                    <div><h2 class="text-2xl font-bold text-textcol dark:text-white leading-none mb-1">অ্যাডমিন কন্ট্রোল প্যানেল</h2><p class="text-muted text-sm">রিয়েল-টাইম ডাটা ওভারভিউ</p></div>
+                    <div class="text-xs bg-white dark:bg-gray-800 px-3 py-2 rounded-lg border border-bordercol dark:border-gray-700 shadow-sm flex items-center space-x-2"><div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div><span class="text-muted font-bold tracking-wider">LIVE SYNC</span></div>
+                </div>
+                
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    ${[{i:'users',c:'blue',t:'মোট সদস্য',id:'s-mem'},{i:'edit',c:'purple',t:'মোট পোস্ট',id:'s-post'},{i:'book',c:'indigo',t:'মোট বই',id:'s-book'},{i:'code-branch',c:'orange',t:'শাখাসমূহ',id:'s-bra'}].map(s=>`
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-bordercol dark:border-gray-700 flex items-center space-x-4"><div class="w-12 h-12 rounded-xl bg-${s.c}-50 dark:bg-${s.c}-900/30 text-${s.c}-500 flex items-center justify-center text-xl flex-shrink-0"><i class="fas fa-${s.i}"></i></div><div><p class="text-xs text-muted font-bold uppercase">${s.t}</p><h3 class="text-2xl font-bold text-textcol dark:text-white leading-tight" id="${s.id}">-</h3></div></div>`).join('')}
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-bordercol dark:border-gray-700">
+                        <h3 class="font-bold text-lg mb-4 text-textcol dark:text-white flex items-center space-x-2"><i class="fas fa-wallet text-primary"></i> <span>আর্থিক সারাংশ (বর্তমান মাস)</span></h3>
+                        <div class="space-y-4">
+                            <div><div class="flex justify-between text-sm font-bold mb-1"><span class="text-muted">মোট আয়</span><span class="text-green-500" id="s-inc">৳ 0</span></div><div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 overflow-hidden"><div class="bg-green-500 h-full" id="bar-inc" style="width:0%"></div></div></div>
+                            <div><div class="flex justify-between text-sm font-bold mb-1"><span class="text-muted">মোট ব্যয়</span><span class="text-red-500" id="s-exp">৳ 0</span></div><div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 overflow-hidden"><div class="bg-red-500 h-full" id="bar-exp" style="width:0%"></div></div></div>
+                            <div class="pt-4 border-t border-bordercol dark:border-gray-700 flex justify-between items-center"><span class="text-sm font-bold text-muted">বর্তমান ব্যালেন্স</span><span class="text-2xl font-bold text-primary dark:text-green-400" id="s-bal">৳ 0</span></div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-bordercol dark:border-gray-700 flex flex-col">
+                        <h3 class="font-bold text-lg mb-4 text-textcol dark:text-white flex items-center space-x-2"><i class="fas fa-history text-blue-500"></i> <span>সর্বশেষ কার্যক্রম</span></h3>
+                        <div id="recent-activity" class="flex-1 overflow-y-auto space-y-3 no-scrollbar"><div class="text-center py-10 text-muted"><i class="fas fa-spinner fa-spin text-2xl"></i></div></div>
+                    </div>
+                </div>
+            `;
+
+            // Setup Listeners for Stats (Using onValue for realtime)
+            const countNodes = [
+                {p:'members', id:'s-mem'}, {p:'posts', id:'s-post'}, {p:'books', id:'s-book'}, {p:'branches', id:'s-bra'}
+            ];
+            countNodes.forEach(n => { addListener(n.p, s => document.getElementById(n.id).innerText = s.exists() ? s.size : '0'); });
+
+            // Finance Calculator
+            Promise.all([get(ref(db,'income')), get(ref(db,'expenses')), get(ref(db,'donations'))]).then(([iS, eS, dS]) => {
+                let inc=0, exp=0;
+                if(iS.exists()) iS.forEach(c=>inc+=parseFloat(c.val().amount||0));
+                if(dS.exists()) dS.forEach(c=>inc+=parseFloat(c.val().amount||0));
+                if(eS.exists()) eS.forEach(c=>exp+=parseFloat(c.val().amount||0));
+                
+                document.getElementById('s-inc').innerText = formatMoney(inc);
+                document.getElementById('s-exp').innerText = formatMoney(exp);
+                document.getElementById('s-bal').innerText = formatMoney(inc - exp);
+                
+                const total = inc + exp || 1;
+                document.getElementById('bar-inc').style.width = `${(inc/total)*100}%`;
+                document.getElementById('bar-exp').style.width = `${(exp/total)*100}%`;
+            });
+
+            // Audit Logs
+            addListener('auditLogs', snap => {
+                const ra = document.getElementById('recent-activity');
+                if(!snap.exists()) { ra.innerHTML = `<p class="text-xs text-muted text-center py-4">কোনো কার্যক্রম নেই</p>`; return; }
+                const logs = []; snap.forEach(c=>logs.push(c.val()));
+                logs.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+                ra.innerHTML = logs.slice(0,5).map(l=>`
+                    <div class="flex items-start space-x-3 text-sm p-2 bg-gray-50 dark:bg-gray-900 rounded-lg border border-bordercol dark:border-gray-700">
+                        <div class="mt-0.5 text-primary"><i class="fas fa-check-circle"></i></div>
+                        <div><p class="text-textcol dark:text-gray-200 font-medium">${escapeHtml(l.action)}: <span class="font-bold">${escapeHtml(l.target)}</span></p><p class="text-[10px] text-muted">${formatDate(l.timestamp)} • Admin</p></div>
+                    </div>`).join('');
+            });
+        }
+
+        function renderSettings(container) {
+            container.innerHTML = `
+                <div class="max-w-2xl bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-bordercol dark:border-gray-700 overflow-hidden">
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 border-b border-bordercol dark:border-gray-700"><h3 class="font-bold text-lg text-primary flex items-center space-x-2"><i class="fas fa-cogs"></i> <span>সংগঠন সেটিংস</span></h3></div>
+                    <form id="settings-form" class="p-6 space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-xs font-bold text-muted mb-1">সংগঠনের নাম</label><input type="text" id="s_orgName" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+                            <div><label class="block text-xs font-bold text-muted mb-1">ট্যাগলাইন</label><input type="text" id="s_tagline" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+                        </div>
+                        <div><label class="block text-xs font-bold text-muted mb-1">বিস্তারিত বিবরণ</label><textarea id="s_desc" rows="3" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></textarea></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-xs font-bold text-muted mb-1">যোগাযোগ (ফোন)</label><input type="text" id="s_phone" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+                            <div><label class="block text-xs font-bold text-muted mb-1">যোগাযোগ (ইমেইল)</label><input type="text" id="s_email" class="w-full p-2 border border-bordercol rounded bg-gray-50 dark:bg-gray-700 dark:text-white outline-none"></div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-bordercol dark:border-gray-700 mt-6">
+                            <h4 class="font-bold text-sm text-primary mb-3">ডোনেশন নাম্বার</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div><label class="block text-xs font-bold text-muted mb-1">বিকাশ</label><input type="text" id="s_bkash" class="w-full p-2 border border-bordercol rounded bg-white dark:bg-gray-700 dark:text-white outline-none"></div>
+                                <div><label class="block text-xs font-bold text-muted mb-1">নগদ</label><input type="text" id="s_nagad" class="w-full p-2 border border-bordercol rounded bg-white dark:bg-gray-700 dark:text-white outline-none"></div>
+                                <div><label class="block text-xs font-bold text-muted mb-1">রকেট</label><input type="text" id="s_rocket" class="w-full p-2 border border-bordercol rounded bg-white dark:bg-gray-700 dark:text-white outline-none"></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-darkgreen text-white font-bold py-3 rounded-lg shadow-md transition mt-6"><i class="fas fa-save mr-2"></i> সেটিংস আপডেট করুন</button>
+                    </form>
+                </div>
+            `;
+            
+            get(ref(db, 'settings/orgInfo')).then(snap => {
+                if(snap.exists()) {
+                    const d = snap.val();
+                    ['orgName','tagline','desc','phone','email','bkash','nagad','rocket'].forEach(k => {
+                        if(document.getElementById('s_'+k)) document.getElementById('s_'+k).value = d[k]||'';
+                    });
+                }
+            });
+
+            document.getElementById('settings-form').onsubmit = async e => {
+                e.preventDefault(); showActionLoader('আপডেট হচ্ছে...');
+                const d = {};
+                ['orgName','tagline','desc','phone','email','bkash','nagad','rocket'].forEach(k => { d[k] = document.getElementById('s_'+k).value; });
+                await set(ref(db, 'settings/orgInfo'), d);
+                logAudit('Updated Settings', 'System Settings', 'Admin updated core settings');
+                hideActionLoader(); window.showToast('সেটিংস আপডেট হয়েছে');
+            };
+        }
+
+        function renderReports(container) {
+            container.innerHTML = getEmptyState('এই মডিউলটির চার্ট সিস্টেম আপডেট করা হচ্ছে। ড্যাশবোর্ড থেকে আংশিক রিপোর্ট দেখুন।');
+        }
+
+        // Authentication & Security
+        window.logout = async () => { showActionLoader('লগআউট হচ্ছে...'); await signOut(auth); hideActionLoader(); window.location.reload(); };
+        window.resetPassword = () => {
+            const email = prompt("আপনার অ্যাডমিন ইমেইল দিন:");
+            if(email) { sendPasswordResetEmail(auth, email).then(()=>alert("পাসওয়ার্ড রিসেট লিংক ইমেইলে পাঠানো হয়েছে।")).catch(e=>alert(e.message)); }
+        };
+
+        const checkAdminAccess = async (user) => {
+            try {
+                const snap = await get(ref(db, `admins/${user.uid}`));
+                if(snap.exists() && snap.val() === true) {
+                    window.currentAdmin = user;
+                    document.getElementById('header-admin-email').innerText = user.email;
+                    hide('global-loader'); hide('login-view'); hide('denied-view');
+                    show('admin-app');
+                    buildSidebar();
+                    window.navigate('dashboard');
+                } else {
+                    // Not an admin
+                    hide('global-loader'); hide('login-view'); hide('admin-app');
+                    show('denied-view');
+                }
+            } catch(e) {
+                alert("Database Connection Error. Check Rules.");
+                hide('global-loader'); show('login-view');
+            }
+        };
+
+        // App Initialization
+        document.getElementById('login-form').onsubmit = async e => {
+            e.preventDefault();
+            const btn = document.getElementById('login-btn'); btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> অপেক্ষা করুন...'; btn.disabled = true;
+            try { await signInWithEmailAndPassword(auth, qs('#login-email').value, qs('#login-pass').value); } 
+            catch(err) { qs('#login-error').innerText = "লগইন ব্যর্থ। ইমেইল/পাসওয়ার্ড সঠিক নয় অথবা নেটওয়ার্ক সমস্যা।"; show('login-error'); }
+            finally { btn.innerHTML = 'লগইন করুন'; btn.disabled = false; }
+        };
+
+        onAuthStateChanged(auth, user => {
+            if(user) { checkAdminAccess(user); } 
+            else { window.currentAdmin = null; hide('global-loader'); hide('admin-app'); hide('denied-view'); show('login-view'); }
+        });
+
+        // Fail-safe init loader remover if network hangs
+        setTimeout(() => { if(!document.getElementById('global-loader').classList.contains('hidden')) { alert('Network Timeout. Please refresh.'); } }, 15000);
+
+    </script>
+</body>
+</html>
